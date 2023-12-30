@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions.csproj": {}
   },
   "projects": {
-    "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\ConsoleApp1\\ConsoleApp1.csproj",
-        "projectName": "ConsoleApp1",
-        "projectPath": "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions.csproj",
+        "projectName": "BUKEP.Student.SharpInstructions",
+        "projectPath": "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions.csproj",
         "packagesPath": "C:\\Users\\Artyom\\.nuget\\packages\\",
-        "outputPath": "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\ConsoleApp1\\obj\\",
+        "outputPath": "D:\\bukep_internship_2024\\student_323431\\BUKEP.Student.SharpInstructions\\BUKEP.Student.SharpInstructions\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Artyom\\AppData\\Roaming\\NuGet\\NuGet.Config",
