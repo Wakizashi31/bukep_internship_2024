@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BUKEP.Student.SharpInstructions")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f4b6dbb2b8817045b7237a5d255c38311455ef1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba8506e266b6197336c7ea3609a3087d6625a7f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("BUKEP.Student.SharpInstructions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BUKEP.Student.SharpInstructions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

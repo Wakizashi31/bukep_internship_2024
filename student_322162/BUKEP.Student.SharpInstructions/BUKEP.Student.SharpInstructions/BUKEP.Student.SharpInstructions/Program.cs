@@ -8,10 +8,23 @@
             {
                 while (true)
                 {
-                    Console.WriteLine("Для вызова выполняемой подпрограммы укажите ее номер и нажните Enter:");
+                    Console.WriteLine();
+                    string inscription = "Для вызова выполняемой подпрограммы укажите ее номер и нажните Enter:";
+                    Console.WriteLine(inscription);
                     Console.WriteLine("1 - IF ELSE\r\n2 - WHILE\r\n3 - DO WHILE\r\n4 - FOR\r\n5 - FOREACH\r\n6 - SWITCH\n");
 
-                    int userImput = Convert.ToInt32(Console.ReadLine());
+                    int userImput;
+                    try
+                    {
+                        userImput = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Некоректный ввод!");
+                        continue;
+                    }
+
+                    
 
                     Console.Clear();
                     switch (userImput)
@@ -47,6 +60,7 @@
                                 }
                                 else if (ImputCommand.Key == ConsoleKey.Escape)
                                 {
+                                    Console.Write("ВВы вернулись в меню.");
                                     break;
                                 }
                                 else
@@ -86,6 +100,7 @@
                                 }
                                 else if (ImputCommand.Key == ConsoleKey.Escape)
                                 {
+                                    Console.Write("ВВы вернулись в меню.");
                                     break;
                                 }
                                 else
@@ -121,6 +136,7 @@
                                 }
                                 else if (ImputCommand.Key == ConsoleKey.Escape)
                                 {
+                                    Console.Write("ВВы вернулись в меню.");
                                     break;
                                 }
                                 else
@@ -169,6 +185,7 @@
                                 }
                                 else if (ImputCommand.Key == ConsoleKey.Escape)
                                 {
+                                    Console.Write("ВВы вернулись в меню.");
                                     break;
                                 }
                                 else
@@ -206,6 +223,7 @@
                                 }
                                 else if (ImputCommand.Key == ConsoleKey.Escape)
                                 {
+                                    Console.Write("ВВы вернулись в меню.");
                                     break;
                                 }
                                 else
@@ -243,6 +261,7 @@
                                 }
                                 else if (ImputCommand.Key == ConsoleKey.Escape)
                                 {
+                                    Console.Write("ВВы вернулись в меню.");
                                     break;
                                 }
                                 else
@@ -254,9 +273,10 @@
                             break;
                         default:
                             Console.WriteLine();
-                            Console.WriteLine("Неверный ввод!");
+                            Console.WriteLine("Такой программы нет!");
                             break;
                     }
+                    
 
                 }
             }
@@ -367,6 +387,7 @@
                 while (number != 0);
                 Console.WriteLine("Вы ввели 0 и вышли из цикла!");
             }
+
             MyMethod();
         }
     }
