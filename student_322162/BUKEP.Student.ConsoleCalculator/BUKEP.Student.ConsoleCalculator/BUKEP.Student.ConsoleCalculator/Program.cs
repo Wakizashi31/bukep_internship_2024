@@ -15,7 +15,6 @@ namespace BUKEP.Student.ConsoleCalculator
             {
                 Console.WriteLine("Введите простое математическое выражение для вычисления операции (+ или - или * или /) над двумя числами.\nПо завершению ввода операции нажмите Enter:");
                 string input = Console.ReadLine();
-                input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
                 char[] mathSymbols= new char[] { '+', '-', '/', '*' };
                 string[] numbers = input.Split(mathSymbols);
