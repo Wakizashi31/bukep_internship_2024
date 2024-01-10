@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Concurrent;
+using System.Linq;
 
 namespace BUKEP.Student.ConsoleCalculator
 {
@@ -14,16 +15,23 @@ namespace BUKEP.Student.ConsoleCalculator
             {
                 Console.WriteLine("Введите простое математическое выражение для вычисления операции (+ или - или * или /) над двумя числами.\nПо завершению ввода операции нажмите Enter:");
                 string input = Console.ReadLine();
+                input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                char[] mathSymbolArruy = new char[] { '+', '-', '/', '*' };
-                string[] numbersArruy = input.Split(mathSymbolArruy);
+                char[] mathSymbols= new char[] { '+', '-', '/', '*' };
+                string[] numbers = input.Split(mathSymbols);
+
+                if (numbers.Length >= 3 )
+                {
+                    Console.WriteLine("Выражение введено некорректно!\nПовторите ввод!");
+                    continue;
+                }
 
                 try
                 {
-                    int numberOne = int.Parse(numbersArruy[0]);
-                    int numberTwo = int.Parse(numbersArruy[1]);
+                    int numberOne = int.Parse(numbers[0]);
+                    int numberTwo = int.Parse(numbers[1]);
 
-                    Calc(input, numberOne, numberTwo,mathSymbolArruy);
+                    Calc(input, numberOne, numberTwo,mathSymbols);
                 }
                 catch
                 {
@@ -50,9 +58,9 @@ namespace BUKEP.Student.ConsoleCalculator
         }
 
 
-        static void Calc(string input, int numberOne, int numberTwo, char[] mathSymbolArruy)
+        static void Calc(string input, int numberOne, int numberTwo, char[] mathSymbols)
         {
-            char symbol = mathSymbolArruy.First(s => input.Any(os => os == s));
+            char symbol = mathSymbols.First(s => input.Any(os => os == s));
             switch (symbol)
             {
                 case '+':
