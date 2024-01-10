@@ -1,4 +1,6 @@
-﻿namespace BUKEP.Student.ConsoleCalculator
+﻿using System.Linq;
+
+namespace BUKEP.Student.ConsoleCalculator
 {
     internal class Program
     {
@@ -13,14 +15,15 @@
                 Console.WriteLine("Введите простое математическое выражение для вычисления операции (+ или - или * или /) над двумя числами.\nПо завершению ввода операции нажмите Enter:");
                 string input = Console.ReadLine();
 
-                string[] words = input.Split(new char[] { '+', '-', '/', '*' });
+                char[] mathSymbolArruy = new char[] { '+', '-', '/', '*' };
+                string[] numbersArruy = input.Split(mathSymbolArruy);
 
                 try
                 {
-                    int numberOne = int.Parse(words[0]);
-                    int numberTwo = int.Parse(words[1]);
+                    int numberOne = int.Parse(numbersArruy[0]);
+                    int numberTwo = int.Parse(numbersArruy[1]);
 
-                    Calc(input, numberOne, numberTwo);
+                    Calc(input, numberOne, numberTwo,mathSymbolArruy);
                 }
                 catch
                 {
@@ -47,33 +50,30 @@
         }
 
 
-        static void Calc(string input, int numberOne, int numberTwo)
+        static void Calc(string input, int numberOne, int numberTwo, char[] mathSymbolArruy)
         {
-            foreach (char mathSymbol in input)
+            char symbol = mathSymbolArruy.First(s => input.Any(os => os == s));
+            switch (symbol)
             {
-                switch (mathSymbol)
-                {
-                    case '+':
-                        Console.WriteLine($"{numberOne} + {numberTwo} = {numberOne + numberTwo}");
-                        break;
-                    case '-':
-                        Console.WriteLine($"{numberOne} - {numberTwo} = {numberOne - numberTwo}");
-                        break;
-                    case '*':
-                        Console.WriteLine($"{numberOne} * {numberTwo} = {numberOne * numberTwo}");
-                        break;
-                    case '/':
-                        if (numberOne == 0 || numberTwo == 0)
-                        {
-                            Console.WriteLine("На ноль делить нельзя!");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{numberOne} / {numberTwo} = {(float)(numberOne / (float)numberTwo)}");
-                        }
-                        break;
-                }
-
+                case '+':
+                    Console.WriteLine($"{numberOne} + {numberTwo} = {numberOne + numberTwo}");
+                    break;
+                case '-':
+                    Console.WriteLine($"{numberOne} - {numberTwo} = {numberOne - numberTwo}");
+                    break;
+                case '*':
+                    Console.WriteLine($"{numberOne} * {numberTwo} = {numberOne * numberTwo}");
+                    break;
+                case '/':
+                    if (numberTwo == 0)
+                    {
+                        Console.WriteLine("На ноль делить нельзя!");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{numberOne} / {numberTwo} = {(float)(numberOne / (float)numberTwo)}");
+                    }
+                    break;
             }
         }
     }
