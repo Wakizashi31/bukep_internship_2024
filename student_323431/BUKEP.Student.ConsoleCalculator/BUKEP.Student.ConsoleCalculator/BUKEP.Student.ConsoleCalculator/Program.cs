@@ -21,7 +21,6 @@
                 {
                     int numberOne = int.Parse(numbers[0]);
                     int numberTwo = int.Parse(numbers[1]);
-                    //foreach (char s in mathExpression)
                     char s = symbolsMath.First(s => mathExpression.Any(os => os == s));
                     {
                         switch (s)
