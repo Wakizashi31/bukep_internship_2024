@@ -7,33 +7,39 @@
 
             while (true)
             {
-                Console.WriteLine("\r\nВведите простое математическое выражение для вычисления операции (+ или - или * или /) над двумя числами. " +
-                    "\nПо завершению ввода операции нажмите Enter:");
-                string text = Console.ReadLine();
+                Console.WriteLine("\r\nВведите простое математическое выражение для вычисления операции (+ или - или * или /) над двумя числами.\nПо завершению ввода операции нажмите Enter:");
+                string mathExpression = Console.ReadLine();
 
-                string[] words = text.Split(new char[] { '+', '-', '/', '*' });
+                char[] symbolsMath = new char[] { '+', '-', '/', '*' };
+                string[] numbers = mathExpression.Split(symbolsMath);
+                if (numbers.Length >= 3)
+                {
+                    Console.WriteLine("В выражении должно быть только 2 числа");
+                    continue;
+                }
                 try
                 {
-                    int numberOne = int.Parse(words[0]);
-                    int numbersTwo = int.Parse(words[1]);
-                    foreach (char s in text)
+                    int numberOne = int.Parse(numbers[0]);
+                    int numberTwo = int.Parse(numbers[1]);
+                    //foreach (char s in mathExpression)
+                    char s = symbolsMath.First(s => mathExpression.Any(os => os == s));
                     {
                         switch (s)
                         {
                             case '+':
-                                Console.WriteLine($"{numberOne} + {numbersTwo} = {numberOne + numbersTwo}");
+                                Console.WriteLine($"{numberOne} + {numberTwo} = {numberOne + numberTwo}");
                                 break;
                             case '-':
-                                Console.WriteLine($"{numberOne} - {numbersTwo} = {numberOne - numbersTwo}");
+                                Console.WriteLine($"{numberOne} - {numberTwo} = {numberOne - numberTwo}");
                                 break;
                             case '/':
-                                if (numberOne == 0 || numbersTwo == 0)
+                                if (numberTwo == 0)
                                     Console.WriteLine("На 0 делить нельзя");
                                 else
-                                    Console.WriteLine($"{numberOne} / {numbersTwo} = {(float)(numberOne / (float)numbersTwo)}");
+                                    Console.WriteLine($"{numberOne} / {numberTwo} = {(float)(numberOne / (float)numberTwo)}");
                                 break;
                             case '*':
-                                Console.WriteLine($"{numberOne} * {numbersTwo} = {numberOne * numbersTwo}");
+                                Console.WriteLine($"{numberOne} * {numberTwo} = {numberOne * numberTwo}");
                                 break;
 
                         }
