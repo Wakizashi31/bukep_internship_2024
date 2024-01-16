@@ -9,45 +9,14 @@
             {
                 Console.WriteLine("\r\nВведите простое математическое выражение для вычисления операции (+ или - или * или /) над двумя числами.\nПо завершению ввода операции нажмите Enter:");
                 string mathExpression = Console.ReadLine();
-
-                char[] symbolsMath = new char[] { '+', '-', '/', '*' };
-                string[] numbers = mathExpression.Split(symbolsMath);
-                if (numbers.Length >= 3)
-                {
-                    Console.WriteLine("В выражении должно быть только 2 числа");
-                    continue;
-                }
                 try
                 {
-                    int numberOne = int.Parse(numbers[0]);
-                    int numberTwo = int.Parse(numbers[1]);
-                    char s = symbolsMath.First(s => mathExpression.Any(os => os == s));
-                    {
-                        switch (s)
-                        {
-                            case '+':
-                                Console.WriteLine($"{numberOne} + {numberTwo} = {numberOne + numberTwo}");
-                                break;
-                            case '-':
-                                Console.WriteLine($"{numberOne} - {numberTwo} = {numberOne - numberTwo}");
-                                break;
-                            case '/':
-                                if (numberTwo == 0)
-                                    Console.WriteLine("На 0 делить нельзя");
-                                else
-                                    Console.WriteLine($"{numberOne} / {numberTwo} = {(float)(numberOne / (float)numberTwo)}");
-                                break;
-                            case '*':
-                                Console.WriteLine($"{numberOne} * {numberTwo} = {numberOne * numberTwo}");
-                                break;
-
-                        }
-                    }
-
+                    double result = Evaluate(mathExpression);
+                    Console.WriteLine("Результат: " + result);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Неверный ввод!");
+                    Console.WriteLine("Ошибка: " + ex.Message);
                 }
                 while (true)
                 {
@@ -68,5 +37,14 @@
             }
 
         }
+        static double Evaluate(string expression)
+        {
+            System.Data.DataTable table = new System.Data.DataTable();
+            table.Columns.Add("expression", typeof(string), expression);
+            System.Data.DataRow row = table.NewRow();
+            table.Rows.Add(row);
+            return double.Parse((string)row["expression"]);
+        }
+
     }
 }
