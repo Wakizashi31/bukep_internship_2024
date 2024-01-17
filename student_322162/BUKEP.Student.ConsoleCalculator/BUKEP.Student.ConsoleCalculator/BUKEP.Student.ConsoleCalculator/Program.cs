@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Linq;
+﻿using System.Globalization;
 
 namespace BUKEP.Student.ConsoleCalculator
 {
@@ -13,29 +12,30 @@ namespace BUKEP.Student.ConsoleCalculator
         {
             while (true)
             {
-                Console.WriteLine("Введите простое математическое выражение для вычисления операции (+ или - или * или /) над двумя числами.\nПо завершению ввода операции нажмите Enter:");
+                Console.WriteLine("Введите математическое выражение.\nПо завершению ввода операции нажмите Enter:");
                 string input = Console.ReadLine();
-
-                char[] mathSymbols= new char[] { '+', '-', '/', '*' };
-                string[] numbers = input.Split(mathSymbols);
-
-                if (numbers.Length >= 3 )
-                {
-                    Console.WriteLine("Выражение введено некорректно!\nПовторите ввод!");
-                    continue;
-                }
 
                 try
                 {
-                    int numberOne = int.Parse(numbers[0]);
-                    int numberTwo = int.Parse(numbers[1]);
+                    string outputExpression = ConvertToRPN(input);
+                    Console.WriteLine($"Обратная польская запись: {outputExpression}");
 
-                    Calc(input, numberOne, numberTwo,mathSymbols);
+                    double result = CalculateRPN(outputExpression);
+                    Console.WriteLine($"Результат: {result}");
                 }
-                catch
+                catch(DivideByZeroException)
                 {
-                    Console.WriteLine("Введено некорректное выражение!");
+                    Console.WriteLine($"Ошибка: Деление на ноль.");
                 }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine("Ошибка: Недопустимое выражение");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка: {ex}");
+                }
+                
 
 
                 while (true)
@@ -52,36 +52,117 @@ namespace BUKEP.Student.ConsoleCalculator
                     {
                         break;
                     }
+                    else
+                    {
+                        Console.WriteLine(" - Введена неизвестная команда. Повторите ввод.");
+                        continue;
+                    }
                 }
             }
         }
 
-
-        static void Calc(string input, int numberOne, int numberTwo, char[] mathSymbols)
+        static string ConvertToRPN(string input)
         {
-            char symbol = mathSymbols.First(s => input.Any(os => os == s));
-            switch (symbol)
+            var operators = new Dictionary<char, int>
+        {
+            { '(', 0 },
+            { ')', 0 },
+            { '+', 1 },
+            { '-', 1 },
+            { '*', 2 },
+            { '/', 2 },
+            { '^', 3 }
+        };
+
+            var stack = new Stack<char>();
+            var output = new List<string>();
+
+            for (int i = 0; i < input.Length; ++i)
             {
-                case '+':
-                    Console.WriteLine($"{numberOne} + {numberTwo} = {numberOne + numberTwo}");
-                    break;
-                case '-':
-                    Console.WriteLine($"{numberOne} - {numberTwo} = {numberOne - numberTwo}");
-                    break;
-                case '*':
-                    Console.WriteLine($"{numberOne} * {numberTwo} = {numberOne * numberTwo}");
-                    break;
-                case '/':
-                    if (numberTwo == 0)
+                char token = input[i];
+
+                if (char.IsDigit(token))
+                {
+                    string number = token.ToString();
+
+                    while (i + 1 < input.Length && (char.IsDigit(input[i + 1]) || input[i + 1] == '.'))
                     {
-                        Console.WriteLine("На ноль делить нельзя!");
+                        number += input[++i];
                     }
-                    else
+
+                    output.Add(number);
+                }
+                else if (token == '(')
+                {
+                    stack.Push(token);
+                }
+                else if (token == ')')
+                {
+                    while (stack.Peek() != '(')
                     {
-                        Console.WriteLine($"{numberOne} / {numberTwo} = {(float)(numberOne / (float)numberTwo)}");
+                        output.Add(stack.Pop().ToString());
                     }
-                    break;
+                    stack.Pop();
+                }
+                else if (operators.ContainsKey(token))
+                {
+                    while (stack.Count != 0 && operators[token] <= operators[stack.Peek()])
+                    {
+                        output.Add(stack.Pop().ToString());
+                    }
+                    stack.Push(token);
+                }
             }
+
+            while (stack.Count != 0)
+            {
+                output.Add(stack.Pop().ToString());
+            }
+
+            return string.Join(" ", output);
         }
+
+        static double CalculateRPN(string rpn)
+        {
+            var stack = new Stack<double>();
+
+            string[] tokens = rpn.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var token in tokens)
+            {
+                if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out double number))
+                {
+                    stack.Push(number);
+                }
+                else
+                {
+                    double numberTwo = stack.Pop();
+                    double numberOne = stack.Pop();
+                    double result;
+
+                    switch (token)
+                    {
+                        case "+": result = numberOne + numberTwo; break;
+                        case "-": result = numberOne - numberTwo; break;
+                        case "*": result = numberOne * numberTwo; break;
+                        case "/":
+                            if (numberTwo == 0)
+                                throw new DivideByZeroException();
+                            result = numberOne / numberTwo;
+                            break;
+                        case "^": result = Math.Pow(numberOne, numberTwo); break;
+                        default: throw new ArgumentException();
+
+                    }
+                    stack.Push(result);
+                }
+            }
+
+            if (stack.Count == 1)
+                return stack.Pop();
+            else
+                throw new ArgumentException();
+        }
+
     }
 }
