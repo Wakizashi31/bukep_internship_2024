@@ -61,6 +61,11 @@ namespace BUKEP.Student.ConsoleCalculator
             }
         }
 
+        /// <summary>
+        /// Конвертирует математическое выражение в обратную польскую нотацию.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         static string ConvertToRPN(string input)
         {
             var operators = new Dictionary<char, int>
@@ -122,6 +127,13 @@ namespace BUKEP.Student.ConsoleCalculator
             return string.Join(" ", output);
         }
 
+        /// <summary>
+        /// Возвращает результат математического выражения, записанного в обратной польской нотации.
+        /// </summary>
+        /// <param name="rpn"></param>
+        /// <returns></returns>
+        /// <exception cref="DivideByZeroException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         static double CalculateRPN(string rpn)
         {
             var stack = new Stack<double>();
