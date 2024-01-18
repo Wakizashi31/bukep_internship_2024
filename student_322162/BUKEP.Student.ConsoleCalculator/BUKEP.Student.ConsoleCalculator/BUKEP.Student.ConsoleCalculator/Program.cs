@@ -64,8 +64,8 @@ namespace BUKEP.Student.ConsoleCalculator
         /// <summary>
         /// Конвертирует математическое выражение в обратную польскую нотацию.
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
+        /// <param name="input">Математическое выражение.</param>
+        /// <returns>Математическое выражение в обратной польской нотации.</returns>
         static string ConvertToRPN(string input)
         {
             var operators = new Dictionary<char, int>
@@ -130,10 +130,10 @@ namespace BUKEP.Student.ConsoleCalculator
         /// <summary>
         /// Возвращает результат математического выражения, записанного в обратной польской нотации.
         /// </summary>
-        /// <param name="rpn"></param>
-        /// <returns></returns>
-        /// <exception cref="DivideByZeroException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="rpn">Математическое выражение в формате обратной польской нотации.</param>
+        /// <returns>Вовзвращает результат выражения.</returns>
+        /// <exception cref="DivideByZeroException">Генерируется если в выражении происходит деление на ноль.</exception>
+        /// <exception cref="ArgumentException">Генерируется при недопустимом выражении.</exception>
         static double CalculateRPN(string rpn)
         {
             var stack = new Stack<double>();
