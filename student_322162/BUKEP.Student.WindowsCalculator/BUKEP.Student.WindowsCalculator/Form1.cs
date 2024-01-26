@@ -44,9 +44,18 @@ namespace BUKEP.Student.WindowsCalculator
         {
             try
             {
-                string convertToRPN = Calculator.ConvertToRPN(textBox1.Text);
+                bool symbolEqual = textBox1.Text.Contains('=');
 
-                textBox1.Text += " = " + Calculator.CalculateRPN(convertToRPN);
+                if (!symbolEqual)
+                {
+                    string convertToRPN = Calculator.ConvertToRPN(textBox1.Text);
+
+                    textBox1.Text += " = " + Calculator.CalculateRPN(convertToRPN);
+                }
+                else
+                {
+                    MessageBox.Show("Результат выражения уже получен.");
+                }
             }
             catch (DivideByZeroException)
             {

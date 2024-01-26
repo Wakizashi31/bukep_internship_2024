@@ -28,11 +28,16 @@ namespace BUKEP.Student.WindowsCalculator
             if (newChar == '.')
             {
                 int lastOperatorIndex = Math.Max(currentText.LastIndexOfAny(new char[] { '+', '-', '*', '/' }), -1);
-                if (currentText.IndexOf('.', lastOperatorIndex + 1) > -1)
+                if (lastOperatorIndex == currentText.Length - 1) 
                 {
-                    return currentText; 
+                    return currentText;
+                }
+                if (currentText.IndexOf('.', lastOperatorIndex + 1) > -1) 
+                {
+                    return currentText;
                 }
             }
+
 
             if (newChar == '0' && currentText.EndsWith("0") && currentText.Length > 0)
             {
