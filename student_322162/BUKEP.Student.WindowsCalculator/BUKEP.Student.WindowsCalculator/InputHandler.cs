@@ -27,7 +27,7 @@ namespace BUKEP.Student.WindowsCalculator
 
             if (newChar == '.')
             {
-                int lastOperatorIndex = Math.Max(currentText.LastIndexOfAny(new char[] { '+', '-', '*', '/' }), -1);
+                int lastOperatorIndex = currentText.LastIndexOfAny(new char[] { '+', '-', '*', '/' });
                 if (lastOperatorIndex == currentText.Length - 1) 
                 {
                     return currentText;
@@ -53,7 +53,7 @@ namespace BUKEP.Student.WindowsCalculator
 
             if (newChar >= '1' && newChar <= '9')
             {
-                int lastNonNumeric = Math.Max(currentText.LastIndexOfAny(new char[] { '+', '-', '*', '/' }), -1);
+                int lastNonNumeric = currentText.LastIndexOfAny(new char[] { '+', '-', '*', '/' });
                 string currentNumber = currentText.Substring(lastNonNumeric + 1);
 
                 if (currentNumber == "0")

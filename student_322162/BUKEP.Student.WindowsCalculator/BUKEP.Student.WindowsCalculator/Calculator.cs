@@ -12,20 +12,29 @@ namespace BUKEP.Student.WindowsCalculator
     /// </summary>
     internal class Calculator
     {
+        public double Calculate(string input)
+        {
+            string convertInput = ConvertToRPN(input);
+
+            double result = CalculateRPN(convertInput);
+
+            return result;
+        }
+
         /// <summary>
         /// Конвертирует математическое выражение в обратную польскую нотацию.
         /// </summary>
         /// <param name="input">Математическое выражение.</param>
         /// <returns>Математическое выражение в обратной польской нотации.</returns>
-        public string ConvertToRPN(string input)
+        private string ConvertToRPN(string input)
         {
             var operators = new Dictionary<char, int>
-        {
-            { '+', 1 },
-            { '-', 1 },
-            { '*', 2 },
-            { '/', 2 }
-        };
+            {
+                { '+', 1 },
+                { '-', 1 },
+                { '*', 2 },
+                { '/', 2 }
+            };
 
             var stack = new Stack<char>();
             var output = new List<string>();
@@ -71,7 +80,7 @@ namespace BUKEP.Student.WindowsCalculator
         /// <returns>Вовзвращает результат выражения.</returns>
         /// <exception cref="DivideByZeroException">Генерируется если в выражении происходит деление на ноль.</exception>
         /// <exception cref="ArgumentException">Генерируется при недопустимом выражении.</exception>
-        public double CalculateRPN(string rpn)
+        private double CalculateRPN(string rpn)
         {
             var stack = new Stack<double>();
 

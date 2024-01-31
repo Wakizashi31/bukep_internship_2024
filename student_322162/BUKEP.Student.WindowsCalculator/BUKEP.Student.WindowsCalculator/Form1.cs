@@ -48,9 +48,7 @@ namespace BUKEP.Student.WindowsCalculator
 
                 if (!symbolEqual)
                 {
-                    string convertToRPN = Calculator.ConvertToRPN(textBox1.Text);
-
-                    textBox1.Text += " = " + Calculator.CalculateRPN(convertToRPN);
+                    textBox1.Text += " = " + Calculator.Calculate(textBox1.Text);
                 }
                 else
                 {
