@@ -22,8 +22,8 @@ namespace BUKEP.Student.WindowsCalculator
 
         private void ButtonInput_Click(object sender, EventArgs e)
         {
-            Button B = (Button)sender;
-            char newChar = B.Text[0]; 
+            Button button = (Button)sender;
+            char newChar = button.Text[0]; 
             textBox1.Text = InputHandler.GetUpdatedInput(textBox1.Text, newChar);
         }
 
