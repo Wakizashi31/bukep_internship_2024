@@ -12,6 +12,11 @@ namespace BUKEP.Student.WindowsCalculator
     /// </summary>
     internal class Calculator
     {
+        /// <summary>
+        /// Возвращает результат математического выражения.
+        /// </summary>
+        /// <param name="input">Математическое выражение.</param>
+        /// <returns>Вовзвращает результат выражения.</returns>
         public double Calculate(string input)
         {
             string convertInput = ConvertToRPN(input);
