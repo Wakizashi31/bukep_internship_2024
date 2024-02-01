@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8A9B8D68-8E54-410E-AFE6-4EC9058D84A3}</ProjectGuid>
+    <ProjectGuid>{4FECF783-B6AC-44C3-9C76-370F10E5113F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>BUKEP.Student.WindowsCalculator</RootNamespace>
     <AssemblyName>BUKEP.Student.WindowsCalculator</AssemblyName>
@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculate.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
