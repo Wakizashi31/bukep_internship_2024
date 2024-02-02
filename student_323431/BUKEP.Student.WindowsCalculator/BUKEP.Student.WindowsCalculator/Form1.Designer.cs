@@ -107,7 +107,7 @@
             this.button1.TabIndex = 72;
             this.button1.Text = "C";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.buttonClear);
+            this.button1.Click += new System.EventHandler(this.ButtonClear);
             // 
             // button17
             // 
@@ -149,7 +149,7 @@
             this.button15.TabIndex = 69;
             this.button15.Text = "+";
             this.button15.UseVisualStyleBackColor = false;
-            this.button15.Click += new System.EventHandler(this.buttonDisplay);
+            this.button15.Click += new System.EventHandler(this.ButtonDisplay);
             // 
             // button14
             // 
@@ -163,7 +163,7 @@
             this.button14.TabIndex = 68;
             this.button14.Text = "-";
             this.button14.UseVisualStyleBackColor = false;
-            this.button14.Click += new System.EventHandler(this.buttonDisplay);
+            this.button14.Click += new System.EventHandler(this.ButtonDisplay);
             // 
             // button13
             // 
@@ -177,7 +177,7 @@
             this.button13.TabIndex = 67;
             this.button13.Text = "*";
             this.button13.UseVisualStyleBackColor = false;
-            this.button13.Click += new System.EventHandler(this.buttonDisplay);
+            this.button13.Click += new System.EventHandler(this.ButtonDisplay);
             // 
             // button12
             // 
@@ -303,7 +303,7 @@
             this.button3.TabIndex = 58;
             this.button3.Text = "/";
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.buttonDisplay);
+            this.button3.Click += new System.EventHandler(this.ButtonDisplay);
             // 
             // button2
             // 
@@ -317,7 +317,7 @@
             this.button2.TabIndex = 57;
             this.button2.Text = "⌫";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.buttonDeleteSymbol);
+            this.button2.Click += new System.EventHandler(this.ButtonDeleteSymbol);
             // 
             // button4
             // 

@@ -47,7 +47,7 @@ namespace BUKEP.Student.WindowsCalculator
             }
         }
 
-        private void buttonClear(object sender, EventArgs e)
+        private void ButtonClear(object sender, EventArgs e)
         {
             Flag = true;
             Act = string.Empty;
@@ -55,7 +55,7 @@ namespace BUKEP.Student.WindowsCalculator
             display.Text = "0";
         }
         
-        private void buttonDisplay(object sender, EventArgs e)
+        private void ButtonDisplay(object sender, EventArgs e)
         {
             Button buttonAct = (Button)sender;
             Act = buttonAct.Text;
@@ -67,12 +67,12 @@ namespace BUKEP.Student.WindowsCalculator
         {
             try
             {
-                string mathExpression = TempParametr.ToString() + Act.ToString() + display.Text;
+                string mathЕxpression = TempParametr.ToString() + Act.ToString() + display.Text;
 
-                display.Text = Convert.ToString(calculate.ResultCalculate(mathExpression));
+                display.Text = Convert.ToString(calculate.ResultCalculate(mathЕxpression));
                 
             }
-            catch(NullReferenceException ex)
+            catch(NullReferenceException)
             {
                 display.Text = "Некорректно";
             }
@@ -90,7 +90,7 @@ namespace BUKEP.Student.WindowsCalculator
             TempParametr = string.Empty;
         }
 
-        private void buttonDeleteSymbol(object sender, EventArgs e)
+        private void ButtonDeleteSymbol(object sender, EventArgs e)
         {
             if (display.Text.Length > 1)
             {

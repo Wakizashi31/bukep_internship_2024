@@ -13,10 +13,10 @@ namespace BUKEP.Student.WindowsCalculator
     internal class Calculate
     {
         /// <summary>
-        /// 
+        /// принимает математическое выражение в виде строки, конвертирует его в обратную польску нотации
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
+        /// <param name="input">Математическое выражение</param>
+        /// <returns>возвращает полученный результат в виде числа с плавающей запятой</returns>
         public double ResultCalculate(string input)
         {
             string ConvertInput = ConvertToRPN(input);
@@ -25,6 +25,7 @@ namespace BUKEP.Student.WindowsCalculator
 
             return result;
         }
+
         /// <summary>
         /// Конвертирует математическое выражение в обратную польскую нотацию
         /// </summary>
@@ -81,6 +82,7 @@ namespace BUKEP.Student.WindowsCalculator
             return output.ToString();
 
         }
+
         /// <summary>
         /// Возращает результат математического выражения, записанного в обратной польской нотации
         /// </summary>
