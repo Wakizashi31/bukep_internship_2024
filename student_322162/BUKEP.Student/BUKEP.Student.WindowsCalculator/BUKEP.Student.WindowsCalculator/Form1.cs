@@ -7,13 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BUKEP.Student.Calculator;
 
 namespace BUKEP.Student.WindowsCalculator
 {
     public partial class Form1 : Form
     {
         private InputHandler InputHandler = new InputHandler();
-        private Calculator Calculator = new Calculator();
+        
+        private MathCalculator calculator = new MathCalculator();
 
         public Form1()
         {
@@ -48,7 +50,7 @@ namespace BUKEP.Student.WindowsCalculator
 
                 if (!symbolEqual)
                 {
-                    textBox1.Text += " = " + Calculator.Calculate(textBox1.Text);
+                    textBox1.Text += " = " + calculator.Calculate(textBox1.Text);
                 }
                 else
                 {

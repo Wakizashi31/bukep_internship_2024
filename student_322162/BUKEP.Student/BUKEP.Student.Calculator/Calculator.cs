@@ -1,64 +1,27 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
-namespace BUKEP.Student.ConsoleCalculator
+namespace BUKEP.Student.Calculator
 {
-    internal class Program
+    /// <summary>
+    /// Класс калькулятор использующий алгоритм обратной польской нотации.
+    /// </summary>
+    public class MathCalculator
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Возвращает результат математического выражения.
+        /// </summary>
+        /// <param name="input">Математическое выражение.</param>
+        /// <returns>Вовзвращает результат выражения.</returns>
+        public double Calculate(string input)
         {
-            ConsoleCalculator();
-        }
-        static void ConsoleCalculator()
-        {
-            while (true)
-            {
-                Console.WriteLine("Введите математическое выражение.\nПо завершению ввода операции нажмите Enter:");
-                string input = Console.ReadLine();
+            string convertInput = ConvertToRPN(input);
 
-                try
-                {
-                    string outputExpression = ConvertToRPN(input);
-                    Console.WriteLine($"Обратная польская запись: {outputExpression}");
+            double result = CalculateRPN(convertInput);
 
-                    double result = CalculateRPN(outputExpression);
-                    Console.WriteLine($"Результат: {result}");
-                }
-                catch(DivideByZeroException)
-                {
-                    Console.WriteLine($"Ошибка: Деление на ноль.");
-                }
-                catch (ArgumentException)
-                {
-                    Console.WriteLine("Ошибка: Недопустимое выражение");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Ошибка: {ex}");
-                }
-                
-
-
-                while (true)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Для повторного ввода операции нажмите Enter, для завершения приложения Esc.");
-                    ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-                    if (keyInfo.Key == ConsoleKey.Escape)
-                    {
-                        return;
-                    }
-                    else if (keyInfo.Key == ConsoleKey.Enter)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine(" - Введена неизвестная команда. Повторите ввод.");
-                        continue;
-                    }
-                }
-            }
+            return result;
         }
 
         /// <summary>
@@ -66,18 +29,18 @@ namespace BUKEP.Student.ConsoleCalculator
         /// </summary>
         /// <param name="input">Математическое выражение.</param>
         /// <returns>Математическое выражение в обратной польской нотации.</returns>
-        static string ConvertToRPN(string input)
+        private string ConvertToRPN(string input)
         {
             var operators = new Dictionary<char, int>
-        {
-            { '(', 0 },
-            { ')', 0 },
-            { '+', 1 },
-            { '-', 1 },
-            { '*', 2 },
-            { '/', 2 },
-            { '^', 3 }
-        };
+            {
+                { '(', 0 },
+                { ')', 0 },
+                { '+', 1 },
+                { '-', 1 },
+                { '*', 2 },
+                { '/', 2 },
+                { '^', 3 }
+            };
 
             var stack = new Stack<char>();
             var output = new List<string>();
@@ -97,6 +60,7 @@ namespace BUKEP.Student.ConsoleCalculator
 
                     output.Add(number);
                 }
+
                 else if (token == '(')
                 {
                     stack.Push(token);
@@ -109,6 +73,7 @@ namespace BUKEP.Student.ConsoleCalculator
                     }
                     stack.Pop();
                 }
+
                 else if (operators.ContainsKey(token))
                 {
                     while (stack.Count != 0 && operators[token] <= operators[stack.Peek()])
@@ -134,7 +99,7 @@ namespace BUKEP.Student.ConsoleCalculator
         /// <returns>Вовзвращает результат выражения.</returns>
         /// <exception cref="DivideByZeroException">Генерируется если в выражении происходит деление на ноль.</exception>
         /// <exception cref="ArgumentException">Генерируется при недопустимом выражении.</exception>
-        static double CalculateRPN(string rpn)
+        private double CalculateRPN(string rpn)
         {
             var stack = new Stack<double>();
 
@@ -148,6 +113,11 @@ namespace BUKEP.Student.ConsoleCalculator
                 }
                 else
                 {
+                    if (stack.Count < 2)
+                    {
+                        throw new ArgumentException();
+                    }
+
                     double numberTwo = stack.Pop();
                     double numberOne = stack.Pop();
                     double result;
@@ -162,7 +132,6 @@ namespace BUKEP.Student.ConsoleCalculator
                                 throw new DivideByZeroException();
                             result = numberOne / numberTwo;
                             break;
-                        case "^": result = Math.Pow(numberOne, numberTwo); break;
                         default: throw new ArgumentException();
 
                     }
@@ -175,6 +144,5 @@ namespace BUKEP.Student.ConsoleCalculator
             else
                 throw new ArgumentException();
         }
-
     }
 }
