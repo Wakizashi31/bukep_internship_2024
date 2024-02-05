@@ -8,7 +8,7 @@ namespace BUKEP.Student.Calculator
     /// <summary>
     /// Класс калькулятор использующий алгоритм обратной польской нотации.
     /// </summary>
-    public class Calculator
+    public class MathCalculator
     {
         /// <summary>
         /// Возвращает результат математического выражения.

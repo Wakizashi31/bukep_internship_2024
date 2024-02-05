@@ -18,7 +18,7 @@ namespace BUKEP.Student.ConsoleCalculator
 
                 try
                 {
-                    Calculator.Calculator calculator = new Calculator.Calculator();
+                    MathCalculator calculator = new MathCalculator();
 
                     double result = calculator.Calculate(input);
                     Console.WriteLine($"Результат выражения: {result}");
@@ -46,15 +46,11 @@ namespace BUKEP.Student.ConsoleCalculator
                     {
                         return;
                     }
-                    else if (keyInfo.Key == ConsoleKey.Enter)
+                    if (keyInfo.Key == ConsoleKey.Enter)
                     {
                         break;
                     }
-                    else
-                    {
-                        Console.WriteLine(" - Введена неизвестная команда. Повторите ввод.");
-                        continue;
-                    }
+                    Console.WriteLine();
                 }
             }
         }

@@ -15,7 +15,7 @@ namespace BUKEP.Student.WindowsCalculator
     {
         private InputHandler InputHandler = new InputHandler();
         
-        private Calculator.Calculator calculator = new Calculator.Calculator();
+        private MathCalculator calculator = new MathCalculator();
 
         public Form1()
         {
