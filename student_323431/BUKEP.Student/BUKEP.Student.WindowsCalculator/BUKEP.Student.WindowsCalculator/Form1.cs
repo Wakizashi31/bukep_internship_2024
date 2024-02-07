@@ -16,14 +16,13 @@ namespace BUKEP.Student.WindowsCalculator
         private bool Flag = true;
         private string TempParametr;
         private string Act;
-        private MathCalculator calculator = new MathCalculator();
+        private MathCalculator Calculator = new MathCalculator();
         public Form1()
         {
             InitializeComponent();
         }      
 
-
-        private void AddNumber_Click(object sender, EventArgs e)
+        private void AddNumber(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
             
@@ -55,7 +54,7 @@ namespace BUKEP.Student.WindowsCalculator
             display.Text = "0";
         }
         
-        private void ButtonDisplay(object sender, EventArgs e)
+        private void AddOperation(object sender, EventArgs e)
         {
             Button buttonAct = (Button)sender;
             Act = buttonAct.Text;
@@ -63,13 +62,13 @@ namespace BUKEP.Student.WindowsCalculator
             Flag = true;
         }
 
-        private void ButtonResult(object sender, EventArgs e)
+        private void ButtonExpressionCalculation(object sender, EventArgs e)
         {
             try
             {
                 string mathЕxpression = TempParametr.ToString() + Act.ToString() + display.Text;
 
-                display.Text = Convert.ToString(calculator.ResultCalculate(mathЕxpression));
+                display.Text = Convert.ToString(Calculator.ResultCalculate(mathЕxpression));
                 
             }
             catch(NullReferenceException)
