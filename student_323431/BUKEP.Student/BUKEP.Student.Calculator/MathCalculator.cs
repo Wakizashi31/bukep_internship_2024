@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace BUKEP.Student.WindowsCalculator
+namespace BUKEP.Student.Calculator
 {
     /// <summary>
     /// Класс калькулятор работающий при помощи RPN
     /// </summary>
-    internal class Calculate
+    public class MathCalculator
     {
         /// <summary>
         /// принимает математическое выражение в виде строки, конвертирует его в обратную польску нотации
@@ -20,7 +18,7 @@ namespace BUKEP.Student.WindowsCalculator
         public double ResultCalculate(string input)
         {
             string ConvertInput = ConvertToRPN(input);
-            
+
             double result = CalculateRPN(ConvertInput);
 
             return result;
@@ -72,7 +70,7 @@ namespace BUKEP.Student.WindowsCalculator
                         while (stack.Count != 0 && operators[c] <= operators[stack.Peek()])
                             output.Append(stack.Pop() + " ");
                         stack.Push(c);
-                    }                 
+                    }
                 }
             }
 
