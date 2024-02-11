@@ -30,15 +30,48 @@ namespace BUKEP.Student.WebFormsCalculator
 
         protected void ButtonDeleteChar_Click(object sender, EventArgs e)
         {
-            if (TextBox1.Text != "")
+            if (TextBox1.Text.Length > 1)
             {
                 TextBox1.Text = TextBox1.Text.Remove(TextBox1.Text.Length - 1, 1);
+            }
+            else
+            {
+                TextBox1.Text = "0";
             }
         }
 
         protected void ButtonResult_Click(object sender, EventArgs e)
         {
-            TextBox1.Text += " = " + calculator.Calculate(TextBox1.Text);
+            try
+            {
+                bool symbolEqual = TextBox1.Text.Contains('=');
+
+                if (!symbolEqual)
+                {
+                    TextBox1.Text += " = " + calculator.Calculate(MathExpressionFormat(TextBox1.Text));
+                }
+            }
+            catch (DivideByZeroException)
+            {
+                TextBox1.Text += " = " + "деление на ноль!";
+            }
+            catch (ArgumentException)
+            {
+                TextBox1.Text += " = " + "математическое выржение не удалось преобразовать!";
+            }
+            catch (Exception ex)
+            {
+                TextBox1.Text = "Ошибка:" + ex.ToString();
+            }
+        }
+
+        public string MathExpressionFormat(string input)
+        {
+            input = input.Replace('÷','/');
+            input = input.Replace(',', '.');
+            input = input.Replace('x', '*');
+            
+            return input;
         }
     }
 }

@@ -24,7 +24,7 @@
             <asp:Button ID="Button7" runat="server" Text="7" OnClick="ButtonInput_Click" />
             <asp:Button ID="Button8" runat="server" Text="8" OnClick="ButtonInput_Click" />
             <asp:Button ID="Button9" runat="server" Text="9" OnClick="ButtonInput_Click" />
-            <asp:Button ID="Button10" runat="server" Text="*" OnClick="ButtonInput_Click" />
+            <asp:Button ID="Button10" runat="server" Text="x" OnClick="ButtonInput_Click" />
             <br />
             <asp:Button ID="Button11" runat="server" Text="6" OnClick="ButtonInput_Click" />
             <asp:Button ID="Button12" runat="server" Text="5" OnClick="ButtonInput_Click" />
@@ -37,7 +37,7 @@
             <asp:Button ID="Button18" runat="server" Text="+" OnClick="ButtonInput_Click" />
             <br />
             <asp:Button ID="Button19" runat="server" Text="0" OnClick="ButtonInput_Click" />
-            <asp:Button ID="Button20" runat="server" Text="." OnClick="ButtonInput_Click" />
+            <asp:Button ID="Button20" runat="server" Text="," OnClick="ButtonInput_Click" />
             <asp:Button ID="Button21" runat="server" Text="=" OnClick="ButtonResult_Click" />
             <br />
         </div>
