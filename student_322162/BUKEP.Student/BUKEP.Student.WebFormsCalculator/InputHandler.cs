@@ -70,23 +70,11 @@ namespace BUKEP.Student.WebFormsCalculator
         }
 
         /// <summary>
-        /// Проверяет есть ли в выражении символ равенства.
-        /// </summary>
-        /// <param name="currentText">Текущее математическое выражение.</param>
-        /// <returns>Возвращает true в выражении есть символ равенства.</returns>
-        public bool AvailabilityResult(string currentText)
-        {
-            bool symbolEqual = currentText.Contains('=');
-
-            return symbolEqual;
-        }
-
-        /// <summary>
         /// Заменяет символы в выражении, если они не соотвествуют формату и не могут быть преобразованы в мат.выражения.
         /// </summary>
         /// <param name="input">Текущее математическое выражение.</param>
         /// <returns>Возвращает выражение с изменёнными символами.</returns>
-        public string MathExpressionFormat(string input)
+        public string ConvertToMathExpression(string input)
         {
             input = input.Replace('÷', '/');
             input = input.Replace(',', '.');

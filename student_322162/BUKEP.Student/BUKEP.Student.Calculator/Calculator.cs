@@ -133,6 +133,7 @@ namespace BUKEP.Student.Calculator
                             result = numberOne / numberTwo;
                             break;
                         default: throw new ArgumentException();
+                        case "^": result = Math.Pow(numberOne, numberTwo); break;
 
                     }
                     stack.Push(result);

@@ -14,36 +14,31 @@ namespace BUKEP.Student.WebFormsCalculator
 
         public InputHandler inputHandler = new InputHandler();
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
         protected void ButtonInput_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
 
-            if (!inputHandler.AvailabilityResult(TextBox1.Text))
+            if (!DisplayText.Text.Contains('='))
             {
                 char newChar = button.Text[0];
-                TextBox1.Text = inputHandler.GetUpdatedInput(TextBox1.Text, newChar);
+                DisplayText.Text = inputHandler.GetUpdatedInput(DisplayText.Text, newChar);
             }
         }
 
         protected void ButtonClear_Click(object sender, EventArgs e)
         {
-            TextBox1.Text = "0";
+            DisplayText.Text = "0";
         }
 
         protected void ButtonDeleteChar_Click(object sender, EventArgs e)
         {
-            if (TextBox1.Text.Length > 1)
+            if (DisplayText.Text.Any())
             {
-                TextBox1.Text = TextBox1.Text.Remove(TextBox1.Text.Length - 1, 1);
+                DisplayText.Text = DisplayText.Text.Remove(DisplayText.Text.Length - 1, 1);
             }
             else
             {
-                TextBox1.Text = "0";
+                DisplayText.Text = "0";
             }
         }
 
@@ -51,22 +46,22 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                if (!inputHandler.AvailabilityResult(TextBox1.Text))
+                if (!DisplayText.Text.Contains('='))
                 {
-                    TextBox1.Text += " = " + calculator.Calculate(inputHandler.MathExpressionFormat(TextBox1.Text));
+                    DisplayText.Text += " = " + calculator.Calculate(inputHandler.ConvertToMathExpression(DisplayText.Text));
                 }
             }
             catch (DivideByZeroException)
             {
-                TextBox1.Text += " = " + "деление на ноль!";
+                DisplayText.Text += " = " + "деление на ноль!";
             }
             catch (ArgumentException)
             {
-                TextBox1.Text += " = " + "математическое выржение не удалось преобразовать!";
+                DisplayText.Text += " = " + "математическое выржение не удалось преобразовать!";
             }
             catch (Exception ex)
             {
-                TextBox1.Text = "Ошибка:" + ex.ToString();
+                DisplayText.Text = "Ошибка:" + ex.ToString();
             }
         }
     }
