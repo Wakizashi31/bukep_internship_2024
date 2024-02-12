@@ -12,6 +12,8 @@ namespace BUKEP.Student.WebFormsCalculator
     {
         public MathCalculator calculator = new MathCalculator();
 
+        public InputHandler inputHandler = new InputHandler();
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -20,7 +22,8 @@ namespace BUKEP.Student.WebFormsCalculator
         protected void ButtonInput_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            TextBox1.Text += button.Text;
+            char newChar = button.Text[0];
+            TextBox1.Text = inputHandler.GetUpdatedInput(TextBox1.Text, newChar);
         }
 
         protected void ButtonClear_Click(object sender, EventArgs e)
