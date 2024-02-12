@@ -1,0 +1,11 @@
+﻿.button {
+    width: 45px;
+    height: 45px;
+    border: revert;
+    margin-top: 5px;
+}
+
+.textBox {
+    width: 200px;
+    height: 20px;
+}
