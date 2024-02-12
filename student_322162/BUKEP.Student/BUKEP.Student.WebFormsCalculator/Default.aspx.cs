@@ -32,7 +32,7 @@ namespace BUKEP.Student.WebFormsCalculator
 
         protected void ButtonDeleteChar_Click(object sender, EventArgs e)
         {
-            if (DisplayText.Text.Any())
+            if (DisplayText.Text.Length > 1)
             {
                 DisplayText.Text = DisplayText.Text.Remove(DisplayText.Text.Length - 1, 1);
             }
