@@ -22,8 +22,12 @@ namespace BUKEP.Student.WebFormsCalculator
         protected void ButtonInput_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            char newChar = button.Text[0];
-            TextBox1.Text = inputHandler.GetUpdatedInput(TextBox1.Text, newChar);
+
+            if (!inputHandler.AvailabilityResult(TextBox1.Text))
+            {
+                char newChar = button.Text[0];
+                TextBox1.Text = inputHandler.GetUpdatedInput(TextBox1.Text, newChar);
+            }
         }
 
         protected void ButtonClear_Click(object sender, EventArgs e)
@@ -47,11 +51,9 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                bool symbolEqual = TextBox1.Text.Contains('=');
-
-                if (!symbolEqual)
+                if (!inputHandler.AvailabilityResult(TextBox1.Text))
                 {
-                    TextBox1.Text += " = " + calculator.Calculate(MathExpressionFormat(TextBox1.Text));
+                    TextBox1.Text += " = " + calculator.Calculate(inputHandler.MathExpressionFormat(TextBox1.Text));
                 }
             }
             catch (DivideByZeroException)
@@ -66,15 +68,6 @@ namespace BUKEP.Student.WebFormsCalculator
             {
                 TextBox1.Text = "Ошибка:" + ex.ToString();
             }
-        }
-
-        public string MathExpressionFormat(string input)
-        {
-            input = input.Replace('÷','/');
-            input = input.Replace(',', '.');
-            input = input.Replace('x', '*');
-            
-            return input;
         }
     }
 }
