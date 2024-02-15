@@ -94,10 +94,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BUKEP.Student.Calculator\BUKEP.Student.Calculator.csproj">
       <Project>{32f2ecf2-6ea0-4674-b76e-610fe6220797}</Project>

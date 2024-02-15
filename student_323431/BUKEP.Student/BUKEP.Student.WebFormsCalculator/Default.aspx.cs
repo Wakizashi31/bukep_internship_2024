@@ -1,8 +1,6 @@
 ﻿using BUKEP.Student.Calculator;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -15,22 +13,26 @@ namespace BUKEP.Student.WebFormsCalculator
         protected void ButtonAddNumber(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
-            if (displayText.Text == "0")
+
+            if (displayText.Text == "0" && numButton.Text != ",")
             {
                 displayText.Text = "";
             }
 
-            if(numButton.Text == ",")
+            if (numButton.Text == ",")
             {
-                if (!displayText.Text.Contains(","))
+                string[] numbers = displayText.Text.Split('+', '-', '*', '/');
+                string currentNumber = numbers[numbers.Length - 1];
+
+                if (!currentNumber.Contains(","))
                 {
                     displayText.Text += numButton.Text;
                 }
-            }
+            }           
             else
             {
                 displayText.Text += numButton.Text;
-            }                                                              
+            }
         }
 
         protected void DeleteAll(object sender, EventArgs e)
@@ -53,14 +55,13 @@ namespace BUKEP.Student.WebFormsCalculator
         protected void ButtonResult(object sender, EventArgs e)
         {
             try
-            {
-                if (!displayText.Text.Contains('='))
-                {
+            {              
+                
                     displayText.Text = displayText.Text.Replace(',', '.');
-                    displayText.Text += "=" + calculator.ResultCalculate(displayText.Text);
-                }
+                    displayText.Text = calculator.ResultCalculate(displayText.Text).ToString();
+                
             }
-            catch(DivideByZeroException)
+            catch (DivideByZeroException)
             {
                 displayText.Text = "Ошибка: деление на ноль!";
 
