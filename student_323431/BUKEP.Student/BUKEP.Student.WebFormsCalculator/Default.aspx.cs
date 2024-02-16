@@ -3,6 +3,7 @@ using System.Linq;
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text.RegularExpressions;
 
 namespace BUKEP.Student.WebFormsCalculator
 {
@@ -10,15 +11,14 @@ namespace BUKEP.Student.WebFormsCalculator
     {
         MathCalculator calculator = new MathCalculator();
 
-        protected void ButtonAddNumber(object sender, EventArgs e)
+        public void ButtonAddNumber(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
 
             if (displayText.Text == "0" && numButton.Text != ",")
             {
                 displayText.Text = "";
-            }
-
+            }          
             if (numButton.Text == ",")
             {
                 string[] numbers = displayText.Text.Split('+', '-', '*', '/');
@@ -28,6 +28,10 @@ namespace BUKEP.Student.WebFormsCalculator
                 {
                     displayText.Text += numButton.Text;
                 }
+            }
+            if (displayText.Text.Length > 0 && "+-x÷^".Contains(numButton.Text) && "+-x÷^".Contains(displayText.Text.Last()))
+            {
+                displayText.Text = displayText.Text.Remove(displayText.Text.Length - 1);
             }           
             else
             {
