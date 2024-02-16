@@ -4,6 +4,11 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using System.Web.Services.Description;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+
 
 namespace BUKEP.Student.WebFormsCalculator
 {
@@ -11,7 +16,7 @@ namespace BUKEP.Student.WebFormsCalculator
     {
         
 
-        protected void ButtonAddNumber(object sender, EventArgs e)
+        protected void ButtonAddElement(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
 
@@ -21,7 +26,7 @@ namespace BUKEP.Student.WebFormsCalculator
             }          
             if (numButton.Text == ",")
             {
-                string[] numbers = displayText.Text.Split('+', '-', '*', '/');
+                string[] numbers = displayText.Text.Split('+', '-', '*', '/', '^');
                 string currentNumber = numbers[numbers.Length - 1];
 
                 if (!currentNumber.Contains(","))
@@ -58,17 +63,17 @@ namespace BUKEP.Student.WebFormsCalculator
 
         protected void ButtonResult(object sender, EventArgs e)
         {
+            MathCalculator calculator = new MathCalculator();
+
             try
             {
-                MathCalculator calculator = new MathCalculator();
-
                 displayText.Text = displayText.Text.Replace(',', '.');
                 displayText.Text = calculator.ResultCalculate(displayText.Text).ToString();
-                
             }
             catch (DivideByZeroException)
             {
-                displayText.Text = "Ошибка: деление на ноль!";
+                displayText.Text = "Деление на ноль!";
+                
 
             }
             catch (InvalidOperationException)
@@ -79,6 +84,7 @@ namespace BUKEP.Student.WebFormsCalculator
             {
                 displayText.Text = "Неизвестная ошибка";
             }
+
         }
     }
 }
