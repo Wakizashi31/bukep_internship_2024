@@ -9,9 +9,9 @@ namespace BUKEP.Student.WebFormsCalculator
 {
     public partial class Default : System.Web.UI.Page
     {
-        MathCalculator calculator = new MathCalculator();
+        
 
-        public void ButtonAddNumber(object sender, EventArgs e)
+        protected void ButtonAddNumber(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
 
@@ -29,10 +29,10 @@ namespace BUKEP.Student.WebFormsCalculator
                     displayText.Text += numButton.Text;
                 }
             }
-            if (displayText.Text.Length > 0 && "+-x÷^".Contains(numButton.Text) && "+-x÷^".Contains(displayText.Text.Last()))
+            else if (displayText.Text.Length > 0 && "+-*/^".Contains(numButton.Text) && "+-*/^".Contains(displayText.Text.Last()))
             {
-                displayText.Text = displayText.Text.Remove(displayText.Text.Length - 1);
-            }           
+                displayText.Text = displayText.Text.Replace(numButton.Text, numButton.Text);
+            }
             else
             {
                 displayText.Text += numButton.Text;
@@ -59,10 +59,11 @@ namespace BUKEP.Student.WebFormsCalculator
         protected void ButtonResult(object sender, EventArgs e)
         {
             try
-            {              
-                
-                    displayText.Text = displayText.Text.Replace(',', '.');
-                    displayText.Text = calculator.ResultCalculate(displayText.Text).ToString();
+            {
+                MathCalculator calculator = new MathCalculator();
+
+                displayText.Text = displayText.Text.Replace(',', '.');
+                displayText.Text = calculator.ResultCalculate(displayText.Text).ToString();
                 
             }
             catch (DivideByZeroException)
