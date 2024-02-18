@@ -38,7 +38,8 @@ namespace BUKEP.Student.Calculator
                 ['+'] = 2,
                 ['-'] = 2,
                 ['*'] = 3,
-                ['/'] = 3
+                ['/'] = 3,
+                ['^'] = 4
             };
 
             var output = new StringBuilder();
@@ -109,6 +110,7 @@ namespace BUKEP.Student.Calculator
                         case "+": stack.Push(left + right); break;
                         case "-": stack.Push(left - right); break;
                         case "*": stack.Push(left * right); break;
+                        case "^": stack.Push(Math.Pow(left, right)); break;
                         case "/":
                             if (right == 0)
                             {

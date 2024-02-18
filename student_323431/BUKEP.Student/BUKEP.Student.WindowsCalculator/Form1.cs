@@ -27,7 +27,7 @@ namespace BUKEP.Student.WindowsCalculator
         {
             Button numButton = (Button)sender;
             
-            
+ 
             if (Flag)
             {
                 Flag = false;

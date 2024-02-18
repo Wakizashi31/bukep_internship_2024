@@ -1,0 +1,17 @@
+﻿.button {
+    border-radius: 10px;
+    width: 100px;
+    height: 90px;
+    border: revert;
+    margin-top: 10px;
+    margin-left: auto;
+    font-size: 2em;
+}
+.textBox {
+    width: 400px;
+    height: 40px;
+    font-size: 2em;
+    border-radius:10px;
+    text-align: right;
+    border: revert;  
+}
