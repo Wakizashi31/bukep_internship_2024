@@ -12,9 +12,7 @@
         <div id="container">
             <asp:Label CssClass="nameProgram" ID="NameProgram" runat="server" Text="Калькулятор"></asp:Label>
             <br />
-            <asp:TextBox CssClass="displayText" ID="DisplayResult" runat="server" Text="0" ReadOnly="true"></asp:TextBox>
-            <br />
-            <asp:TextBox CssClass="displayText" ID="DisplayMathExpression" runat="server" Text="0" ReadOnly="true"></asp:TextBox>
+            <asp:TextBox CssClass="displayText" ID="DisplayText" runat="server" Text="0" ReadOnly="true"></asp:TextBox>
             <br />
             <asp:Button CssClass="button" ID="ButtonSave" runat="server" Text="M" OnClick="ButtonSave_Click" />
             <asp:Button CssClass="button" ID="ButtonNextResult" runat="server" Text="<S" OnClick="ButtonNextResult_Click" />

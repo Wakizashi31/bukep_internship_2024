@@ -29,15 +29,13 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                double result = Convert.ToDouble(DisplayResult.Text.Replace('=', ' '));
+                double result = Convert.ToDouble(DisplayText.Text.Replace('=', ' '));
                 var calculationResult = new CalculationResult() { Value = result };
                 storage.Save(calculationResult);
-
-                DisplayResult.Text += " - Сохранено";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                DisplayResult.Text = "Ошибка при сохранении: " + ex.Message;
+                DisplayText.Text = "Ошибка при сохранении: ";
             }
         }
 
@@ -71,7 +69,7 @@ namespace BUKEP.Student.WebFormsCalculator
 
             if (value.Count == 0)
             {
-                DisplayResult.Text = "Нет результатов";
+                DisplayText.Text = "Нет результатов";
                 return;
             }
 
@@ -86,7 +84,7 @@ namespace BUKEP.Student.WebFormsCalculator
                 CurrentPosition = value.Count - 1;
             }
 
-            DisplayResult.Text = value[CurrentPosition].Value.ToString();
+            DisplayText.Text = value[CurrentPosition].Value.ToString();
         }
 
         protected void ButtonClearAll_Click(object sender, EventArgs e)
@@ -94,62 +92,67 @@ namespace BUKEP.Student.WebFormsCalculator
             try
             {
                 storage.Clear();
-                DisplayMathExpression.Text = "0";
-                DisplayResult.Text = "0";
+                DisplayText.Text = "0";
             }
             catch (Exception)
             {
-                DisplayMathExpression.Text = "Ошибка при очистке: ";
+                DisplayText.Text = "Ошибка при очистке: ";
             }
         }
 
         protected void ButtonInput_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-
             char newChar = button.Text[0];
-            DisplayMathExpression.Text = inputHandler.GetUpdatedInput(DisplayMathExpression.Text, newChar);
+            
+            if (DisplayText.Text.Contains('='))
+            {
+                DisplayText.Text = DisplayText.Text.Replace('=', ' '); 
+            }
 
-            try
+            if (Char.IsLetter(DisplayText.Text[0]))
             {
-                DisplayResult.Text = "=" + calculator.Calculate(inputHandler.ConvertToMathExpression(DisplayMathExpression.Text));
+                DisplayText.Text = "0";
             }
-            catch (DivideByZeroException)
-            {
-                DisplayResult.Text = "деление на ноль!";
-            }
-            catch (ArgumentException)
-            {
-                DisplayResult.Text = "неверное выражение!";
-            }
-            catch (Exception ex)
-            {
-                DisplayResult.Text = "Ошибка:" + ex.ToString();
-            }
+            DisplayText.Text = inputHandler.GetUpdatedInput(DisplayText.Text, newChar);
 
         }
 
         protected void ButtonClear_Click(object sender, EventArgs e)
         {
-            DisplayMathExpression.Text = "0";
-            DisplayResult.Text = "0";
+            DisplayText.Text = "0";
         }
 
         protected void ButtonDeleteChar_Click(object sender, EventArgs e)
         {
-            if (DisplayMathExpression.Text.Length > 1)
+            if (DisplayText.Text.Length > 1)
             {
-                DisplayMathExpression.Text = DisplayMathExpression.Text.Remove(DisplayMathExpression.Text.Length - 1, 1);
+                DisplayText.Text = DisplayText.Text.Remove(DisplayText.Text.Length - 1, 1);
             }
             else
             {
-                DisplayMathExpression.Text = "0";
+                DisplayText.Text = "0";
             }
         }
 
         protected void ButtonResult_Click(object sender, EventArgs e)
         {
-            DisplayMathExpression.Text = DisplayResult.Text.Replace('=', ' ');
+            try
+            {
+                DisplayText.Text = "=" + calculator.Calculate(inputHandler.ConvertToMathExpression(DisplayText.Text));
+            }
+            catch (DivideByZeroException)
+            {
+                DisplayText.Text = "деление на ноль!";
+            }
+            catch (ArgumentException)
+            {
+                DisplayText.Text = "неверное выражение!";
+            }
+            catch (Exception ex)
+            {
+                DisplayText.Text = "Ошибка:" + ex.ToString();
+            }
         }
     }
 

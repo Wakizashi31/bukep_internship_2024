@@ -33,22 +33,13 @@ namespace BUKEP.Student.WebFormsCalculator
         protected global::System.Web.UI.WebControls.Label NameProgram;
 
         /// <summary>
-        /// DisplayResult control.
+        /// DisplayText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DisplayResult;
-
-        /// <summary>
-        /// DisplayMathExpression control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DisplayMathExpression;
+        protected global::System.Web.UI.WebControls.TextBox DisplayText;
 
         /// <summary>
         /// ButtonSave control.
