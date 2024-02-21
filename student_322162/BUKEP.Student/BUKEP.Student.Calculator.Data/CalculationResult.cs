@@ -4,8 +4,9 @@ using System.Text;
 
 namespace BUKEP.Student.Calculator.Data
 {
-    internal class CalculationResult
+    public class CalculationResult
     {
-
+        public int Id { get; set; }
+        public double Value { get; set; }
     }
 }

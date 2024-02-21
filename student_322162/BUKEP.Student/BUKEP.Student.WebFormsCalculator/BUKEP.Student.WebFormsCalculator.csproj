@@ -67,6 +67,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DBCalculator.mdf" />
+    <Content Include="App_Data\DBCalculator_log.ldf">
+      <DependentUpon>DBCalculator.mdf</DependentUpon>
+    </Content>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Styles.css" />
@@ -87,10 +91,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BUKEP.Student.Calculator.Data\BUKEP.Student.Calculator.Data.csproj">
+      <Project>{1e38c2c0-34a0-4069-96d9-5f131c88ed20}</Project>
+      <Name>BUKEP.Student.Calculator.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BUKEP.Student.Calculator\BUKEP.Student.Calculator.csproj">
       <Project>{0267d3c0-1997-4891-a75c-4b1f2bf0f8e2}</Project>
       <Name>BUKEP.Student.Calculator</Name>
