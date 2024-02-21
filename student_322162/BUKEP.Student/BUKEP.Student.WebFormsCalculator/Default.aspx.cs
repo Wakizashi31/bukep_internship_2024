@@ -114,8 +114,8 @@ namespace BUKEP.Student.WebFormsCalculator
             {
                 DisplayText.Text = "0";
             }
-            DisplayText.Text = inputHandler.GetUpdatedInput(DisplayText.Text, newChar);
 
+            DisplayText.Text = inputHandler.GetUpdatedInput(DisplayText.Text, newChar);
         }
 
         protected void ButtonClear_Click(object sender, EventArgs e)

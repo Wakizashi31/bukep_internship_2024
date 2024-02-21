@@ -5,6 +5,9 @@ using System.Text;
 
 namespace BUKEP.Student.Calculator.Data
 {
+    /// <summary>
+    /// Класс для управления результатами вычисления в базе данных.
+    /// </summary>
     public class CalculationResultStorage
     {
         private readonly string _connectionString;
@@ -14,6 +17,10 @@ namespace BUKEP.Student.Calculator.Data
             _connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Метод для сохранения результатов в базу данных. 
+        /// </summary>
+        /// <param name="value">Содержит результат вычисления, который будет сохранён.</param>
         public void Save(CalculationResult value)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
@@ -33,6 +40,10 @@ namespace BUKEP.Student.Calculator.Data
             }
         }
 
+        /// <summary>
+        /// Метод для получение всех результатов хранимых в базе данных. 
+        /// </summary>
+        /// <returns> Возвращает список объектов CalculationResult.</returns>
         public List<CalculationResult> GetAll()
         {
             var results = new List<CalculationResult>();
@@ -62,6 +73,9 @@ namespace BUKEP.Student.Calculator.Data
             return results;
         }
 
+        /// <summary>
+        /// Метод для очистка базы данных. 
+        /// </summary>
         public void Clear()
         {
             using (var connection = new SqlConnection(_connectionString))
