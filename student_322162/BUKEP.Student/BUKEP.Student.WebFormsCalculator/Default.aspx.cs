@@ -5,24 +5,117 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BUKEP.Student.Calculator.Data;
+using System.Web.Configuration;
 
 namespace BUKEP.Student.WebFormsCalculator
 {
     public partial class Default : System.Web.UI.Page
     {
-        public MathCalculator calculator = new MathCalculator();
+        private MathCalculator calculator = new MathCalculator();
 
-        public InputHandler inputHandler = new InputHandler();
+        private InputHandler inputHandler = new InputHandler();
+
+        private readonly string connectionString = WebConfigurationManager.ConnectionStrings["DBCalculator"].ConnectionString;
+
+        private readonly CalculationResultService storage;
+
+        private int CurrentPosition
+        {
+            get
+            {
+                if (ViewState["CurrentPosition"] != null)
+                    return (int)ViewState["CurrentPosition"];
+                return 0;
+            }
+            set
+            {
+                ViewState["CurrentPosition"] = value;
+            }
+        }
+
+        public Default()
+        {
+            storage = new CalculationResultService(connectionString);
+        }
+
+        protected void ButtonSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double result = Convert.ToDouble(DisplayText.Text.Replace('=', ' '));
+                var calculationResult = new CalculationResult() { Value = result };
+                storage.Save(result);
+            }
+            catch (Exception)
+            {
+                DisplayText.Text = "Ошибка при сохранении: ";
+            }
+        }
+
+        protected void ButtonNextResult_Click(object sender, EventArgs e)
+        {
+            MoveToResult(-1);
+        }
+
+        protected void ButtonPreviousResult_Click(object sender, EventArgs e)
+        {
+            MoveToResult(1);
+        }
+
+        private void MoveToResult(int step)
+        {
+            List<CalculationResult> value = storage.GetAll();
+
+            if (value.Count == 0)
+            {
+                DisplayText.Text = "Нет результатов";
+                return;
+            }
+
+            CurrentPosition += step;
+
+            if (CurrentPosition < 0)
+            {
+                CurrentPosition = 0;
+            }
+            else if (CurrentPosition >= value.Count)
+            {
+                CurrentPosition = value.Count - 1;
+            }
+
+            DisplayText.Text = value[CurrentPosition].Value.ToString();
+        }
+
+        protected void ButtonClearAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                storage.Clear();
+                DisplayText.Text = "0";
+            }
+            catch (Exception)
+            {
+                DisplayText.Text = "Ошибка при очистке: ";
+            }
+        }
 
         protected void ButtonInput_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-
-            if (!DisplayText.Text.Contains('='))
+            char newChar = button.Text[0];
+            
+            if (DisplayText.Text.Contains('='))
             {
-                char newChar = button.Text[0];
-                DisplayText.Text = inputHandler.GetUpdatedInput(DisplayText.Text, newChar);
+                DisplayText.Text = DisplayText.Text.Replace('=', ' '); 
             }
+
+            if (char.IsLetter(DisplayText.Text[0]))
+            {
+                DisplayText.Text = "0";
+            }
+
+            DisplayText.Text = inputHandler.GetUpdatedInput(DisplayText.Text, newChar);
         }
 
         protected void ButtonClear_Click(object sender, EventArgs e)
@@ -46,18 +139,15 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                if (!DisplayText.Text.Contains('='))
-                {
-                    DisplayText.Text += " = " + calculator.Calculate(inputHandler.ConvertToMathExpression(DisplayText.Text));
-                }
+                DisplayText.Text = "=" + calculator.Calculate(inputHandler.ConvertToMathExpression(DisplayText.Text));
             }
             catch (DivideByZeroException)
             {
-                DisplayText.Text += " = " + "деление на ноль!";
+                DisplayText.Text = "деление на ноль!";
             }
             catch (ArgumentException)
             {
-                DisplayText.Text += " = " + "математическое выржение не удалось преобразовать!";
+                DisplayText.Text = "неверное выражение!";
             }
             catch (Exception ex)
             {
@@ -65,4 +155,5 @@ namespace BUKEP.Student.WebFormsCalculator
             }
         }
     }
+
 }
