@@ -6,22 +6,22 @@ using System.Text;
 namespace BUKEP.Student.Calculator.Data
 {
     /// <summary>
-    /// Класс для управления результатами вычисления в базе данных.
+    /// Сервис результатов вычисления.
     /// </summary>
-    public class CalculationResultStorage
+    public class CalculationResultService
     {
         private readonly string _connectionString;
 
-        public CalculationResultStorage(string connectionString)
+        public CalculationResultService(string connectionString)
         {
             _connectionString = connectionString;
         }
 
         /// <summary>
-        /// Метод для сохранения результатов в базу данных. 
+        /// Сохранить результат.
         /// </summary>
         /// <param name="value">Содержит результат вычисления, который будет сохранён.</param>
-        public void Save(CalculationResult value)
+        public void Save(double value)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
 
@@ -33,7 +33,7 @@ namespace BUKEP.Student.Calculator.Data
 
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Value", value.Value);
+                    command.Parameters.AddWithValue("@Value", value);
                     command.ExecuteNonQuery();
                 }
 
@@ -41,7 +41,7 @@ namespace BUKEP.Student.Calculator.Data
         }
 
         /// <summary>
-        /// Метод для получение всех результатов хранимых в базе данных. 
+        /// Получить все результаты вычислений. 
         /// </summary>
         /// <returns> Возвращает список объектов CalculationResult.</returns>
         public List<CalculationResult> GetAll()
@@ -74,7 +74,7 @@ namespace BUKEP.Student.Calculator.Data
         }
 
         /// <summary>
-        /// Метод для очистка базы данных. 
+        /// Очистить результаты вычислений. 
         /// </summary>
         public void Clear()
         {

@@ -12,32 +12,13 @@ namespace BUKEP.Student.WebFormsCalculator
 {
     public partial class Default : System.Web.UI.Page
     {
-        public MathCalculator calculator = new MathCalculator();
+        private MathCalculator calculator = new MathCalculator();
 
-        public InputHandler inputHandler = new InputHandler();
+        private InputHandler inputHandler = new InputHandler();
 
         private readonly string connectionString = WebConfigurationManager.ConnectionStrings["DBCalculator"].ConnectionString;
 
-        private readonly CalculationResultStorage storage;
-
-        public Default()
-        {
-            storage = new CalculationResultStorage(connectionString);
-        }
-
-        protected void ButtonSave_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                double result = Convert.ToDouble(DisplayText.Text.Replace('=', ' '));
-                var calculationResult = new CalculationResult() { Value = result };
-                storage.Save(calculationResult);
-            }
-            catch (Exception)
-            {
-                DisplayText.Text = "Ошибка при сохранении: ";
-            }
-        }
+        private readonly CalculationResultService storage;
 
         private int CurrentPosition
         {
@@ -50,6 +31,25 @@ namespace BUKEP.Student.WebFormsCalculator
             set
             {
                 ViewState["CurrentPosition"] = value;
+            }
+        }
+
+        public Default()
+        {
+            storage = new CalculationResultService(connectionString);
+        }
+
+        protected void ButtonSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double result = Convert.ToDouble(DisplayText.Text.Replace('=', ' '));
+                var calculationResult = new CalculationResult() { Value = result };
+                storage.Save(result);
+            }
+            catch (Exception)
+            {
+                DisplayText.Text = "Ошибка при сохранении: ";
             }
         }
 
@@ -110,7 +110,7 @@ namespace BUKEP.Student.WebFormsCalculator
                 DisplayText.Text = DisplayText.Text.Replace('=', ' '); 
             }
 
-            if (Char.IsLetter(DisplayText.Text[0]))
+            if (char.IsLetter(DisplayText.Text[0]))
             {
                 DisplayText.Text = "0";
             }
