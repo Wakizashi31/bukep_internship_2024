@@ -5,7 +5,7 @@ using System.Text;
 namespace BUKEP.Student.Calculator.Data
 {
     /// <summary>
-    /// Класс для записи и чтения результатов. 
+    /// Результат вычислений. 
     /// </summary>
     public class CalculationResult
     {
