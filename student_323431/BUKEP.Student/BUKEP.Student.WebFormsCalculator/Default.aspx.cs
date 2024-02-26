@@ -8,13 +8,37 @@ using System.Web.Services.Description;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Configuration;
+using BUKEP.Student.Calculator.Data;
+using System.Collections.Generic;
 
 
 namespace BUKEP.Student.WebFormsCalculator
 {
     public partial class Default : System.Web.UI.Page
     {
-        
+        private readonly string connectionString = WebConfigurationManager.ConnectionStrings["CalculatorDB"].ConnectionString;
+        private readonly  CalculatorResult storage;
+        private int CurrentPosition
+        {
+            get
+            {
+                if (ViewState["CurrentPosition"] != null)
+                    return (int)ViewState["CurrentPosition"];
+                return 0;
+            }
+            set
+            {
+                ViewState["CurrentPosition"] = value;
+            }
+        }
+        public Default()
+        {
+            storage = new CalculatorResult(connectionString);
+        }
 
         protected void ButtonAddElement(object sender, EventArgs e)
         {
@@ -85,6 +109,65 @@ namespace BUKEP.Student.WebFormsCalculator
                 displayText.Text = "Неизвестная ошибка";
             }
 
+        }
+        private void MoveToResult(int step)
+        {
+            List<CalculatorStorage> value = storage.GetAll();
+
+            if (value.Count == 0)
+            {
+                displayText.Text = "Нет результатов";
+                return;
+            }
+
+            CurrentPosition += step;
+
+            if (CurrentPosition < 0)
+            {
+                CurrentPosition = 0;
+            }
+            else if (CurrentPosition >= value.Count)
+            {
+                CurrentPosition = value.Count - 1;
+            }
+
+            displayText.Text = value[CurrentPosition].Value.ToString();
+        }
+        protected void DbClearResults(object sender, EventArgs e)
+        {
+            try
+            {
+                storage.ClearData();
+                displayText.Text = "0";
+            }
+            catch (Exception)
+            {
+                displayText.Text = "Ошибка при очистке: ";
+            }
+        }
+
+        protected void ButtonBeforeResult(object sender, EventArgs e)
+        {
+            MoveToResult(1);
+        }
+
+        protected void ButtonNextResult(object sender, EventArgs e)
+        {
+            MoveToResult(-1);
+        }
+
+        protected void ButtonSaveResult(object sender, EventArgs e)
+        {
+            try
+            {
+                double result = Convert.ToDouble(displayText.Text.Replace('=', ' '));
+                var CalcResult = new CalculatorStorage() { Value = result };
+                storage.Save(result);
+            }
+            catch (Exception)
+            {
+                displayText.Text = "Ошибка при сохранении: ";
+            }
         }
     }
 }

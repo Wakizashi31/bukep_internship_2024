@@ -11,8 +11,12 @@
     <form id="form1" runat="server">
         <div style="width: 500px; margin: 0 auto;">           
             <asp:Label ID="Label1" runat="server" Text="Калькулятор" font-size="2em"></asp:Label>
-            <br />            
+            <br />           
             <asp:TextBox CssClass="textBox" ID="displayText" runat="server" ReadOnly="True">0</asp:TextBox>
+            <asp:Button CssClass="button" ID ="Save" runat="server" Text="M" OnClick="ButtonSaveResult" />
+            <asp:Button CssClass="button" ID="NextResult" runat ="server" Text ="S>" OnClick="ButtonNextResult" />
+            <asp:Button CssClass="button" ID="BeforeResult" runat ="server" Text ="<S" OnClick="ButtonBeforeResult" />
+            <asp:Button CssClass="button" ID="ClearAllResult" runat ="server" Text ="MC" OnClick="DbClearResults" />
             <br />            
             <asp:Button CssClass ="button" ID="ButtonClear" runat="server" Text="C" OnClick="DeleteAll"/>
             <asp:Button CssClass ="button" ID="ButtonDeleteSymbol" runat="server" Text="⌫" OnClick ="DeleteSymbol"/>
