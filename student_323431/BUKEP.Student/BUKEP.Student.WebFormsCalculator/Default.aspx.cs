@@ -1,19 +1,10 @@
 ﻿using BUKEP.Student.Calculator;
-using System.Linq;
-using System;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
-using System.Web.Services.Description;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Web.Configuration;
 using BUKEP.Student.Calculator.Data;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Configuration;
+using System.Web.UI.WebControls;
 
 
 namespace BUKEP.Student.WebFormsCalculator
@@ -21,7 +12,7 @@ namespace BUKEP.Student.WebFormsCalculator
     public partial class Default : System.Web.UI.Page
     {
         private readonly string connectionString = WebConfigurationManager.ConnectionStrings["CalculatorDB"].ConnectionString;
-        private readonly  CalculatorResult storage;
+        private readonly  CalculationResultService storage;
         
         private int CurrentPosition
         {
@@ -39,10 +30,10 @@ namespace BUKEP.Student.WebFormsCalculator
 
         public Default()
         {
-            storage = new CalculatorResult(connectionString);
+            storage = new CalculationResultService(connectionString);
         }
 
-        protected void bElement_Click(object sender, EventArgs e)
+        protected void bElement_click(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
 
@@ -70,12 +61,12 @@ namespace BUKEP.Student.WebFormsCalculator
             }
         }
 
-        protected void DeleteAll_click(object sender, EventArgs e)
+        protected void bDeleteAll_click(object sender, EventArgs e)
         {
             displayText.Text = "0";
         }
 
-        protected void DeleteSymbol_click(object sender, EventArgs e)
+        protected void bDeleteSymbol_click(object sender, EventArgs e)
         {
             if (displayText.Text.Length > 1)
             {
@@ -112,9 +103,13 @@ namespace BUKEP.Student.WebFormsCalculator
             }
 
         }
+
+        /// <summary>
+        /// Перейти к результату
+        /// </summary>
         private void MoveToResult(int step)
         {
-            List<CalculatorStorage> value = storage.GetAll();
+            List<CalculationResult> value = storage.GetAll();
 
             if (value.Count == 0)
             {
@@ -135,7 +130,8 @@ namespace BUKEP.Student.WebFormsCalculator
 
             displayText.Text = value[CurrentPosition].Value.ToString();
         }
-        protected void DbClearResults_click(object sender, EventArgs e)
+
+        protected void bDbClearResults_click(object sender, EventArgs e)
         {
             try
             {
@@ -162,8 +158,7 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                double result = Convert.ToDouble(displayText.Text);
-                //var CalcResult = new CalculatorStorage() { Value = result };
+                double result = Convert.ToDouble(displayText.Text);               
                 storage.Save(result);
             }
             catch (Exception)
