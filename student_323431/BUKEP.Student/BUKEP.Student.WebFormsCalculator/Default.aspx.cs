@@ -22,6 +22,7 @@ namespace BUKEP.Student.WebFormsCalculator
     {
         private readonly string connectionString = WebConfigurationManager.ConnectionStrings["CalculatorDB"].ConnectionString;
         private readonly  CalculatorResult storage;
+        
         private int CurrentPosition
         {
             get
@@ -35,12 +36,13 @@ namespace BUKEP.Student.WebFormsCalculator
                 ViewState["CurrentPosition"] = value;
             }
         }
+
         public Default()
         {
             storage = new CalculatorResult(connectionString);
         }
 
-        protected void ButtonAddElement(object sender, EventArgs e)
+        protected void bElement_Click(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
 
@@ -68,12 +70,12 @@ namespace BUKEP.Student.WebFormsCalculator
             }
         }
 
-        protected void DeleteAll(object sender, EventArgs e)
+        protected void DeleteAll_click(object sender, EventArgs e)
         {
             displayText.Text = "0";
         }
 
-        protected void DeleteSymbol(object sender, EventArgs e)
+        protected void DeleteSymbol_click(object sender, EventArgs e)
         {
             if (displayText.Text.Length > 1)
             {
@@ -85,7 +87,7 @@ namespace BUKEP.Student.WebFormsCalculator
             }
         }
 
-        protected void ButtonResult(object sender, EventArgs e)
+        protected void bResult_click(object sender, EventArgs e)
         {
             MathCalculator calculator = new MathCalculator();
 
@@ -133,7 +135,7 @@ namespace BUKEP.Student.WebFormsCalculator
 
             displayText.Text = value[CurrentPosition].Value.ToString();
         }
-        protected void DbClearResults(object sender, EventArgs e)
+        protected void DbClearResults_click(object sender, EventArgs e)
         {
             try
             {
@@ -146,22 +148,22 @@ namespace BUKEP.Student.WebFormsCalculator
             }
         }
 
-        protected void ButtonBeforeResult(object sender, EventArgs e)
-        {
-            MoveToResult(1);
-        }
-
-        protected void ButtonNextResult(object sender, EventArgs e)
+        protected void bBeforeResult_click(object sender, EventArgs e)
         {
             MoveToResult(-1);
         }
 
-        protected void ButtonSaveResult(object sender, EventArgs e)
+        protected void bNextResult_click(object sender, EventArgs e)
+        {
+            MoveToResult(1);
+        }
+
+        protected void bSaveResult_click(object sender, EventArgs e)
         {
             try
             {
-                double result = Convert.ToDouble(displayText.Text.Replace('=', ' '));
-                var CalcResult = new CalculatorStorage() { Value = result };
+                double result = Convert.ToDouble(displayText.Text);
+                //var CalcResult = new CalculatorStorage() { Value = result };
                 storage.Save(result);
             }
             catch (Exception)

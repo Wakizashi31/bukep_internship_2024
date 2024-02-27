@@ -51,15 +51,6 @@ namespace BUKEP.Student.WebFormsCalculator
         protected global::System.Web.UI.WebControls.Button Save;
 
         /// <summary>
-        /// NextResult control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button NextResult;
-
-        /// <summary>
         /// BeforeResult control.
         /// </summary>
         /// <remarks>
@@ -67,6 +58,15 @@ namespace BUKEP.Student.WebFormsCalculator
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BeforeResult;
+
+        /// <summary>
+        /// NextResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NextResult;
 
         /// <summary>
         /// ClearAllResult control.

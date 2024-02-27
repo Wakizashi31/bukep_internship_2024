@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace BUKEP.Student.Calculator.Data
-{
+{   /// <summary>
+    /// Результат вычислений
+    /// </summary>
     public class CalculatorResult
     {
         private readonly string _connectionString;
@@ -12,6 +14,10 @@ namespace BUKEP.Student.Calculator.Data
         {
             _connectionString = connectionString;
         }
+        /// <summary>
+        /// Сохранение результата
+        /// </summary>
+        /// <param name="value">результат вычисления,который будет сохранен</param>
         public void Save (double value)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
@@ -29,13 +35,17 @@ namespace BUKEP.Student.Calculator.Data
             }
         }
 
+        /// <summary>
+        /// Получает результаты вычислений
+        /// </summary>
+        /// <returns>Возвращает список объектов</returns>
         public List<CalculatorStorage> GetAll()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var result = new List<CalculatorStorage>();
+                var results = new List<CalculatorStorage>();
                 var query = "SELECT Id, Value FROM CalculatorResult";
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -49,14 +59,17 @@ namespace BUKEP.Student.Calculator.Data
                                 Value = reader.GetDouble(reader.GetOrdinal("Value"))
                             };
 
-                            result.Add(value);
+                            results.Add(value);
                         }
                     }
                 }
-                return result;
+                return results;
             }
         }   
 
+        /// <summary>
+        /// очищает хранилище с результатами 
+        /// </summary>
         public void ClearData()
         {
             using (var connection = new SqlConnection(_connectionString))
