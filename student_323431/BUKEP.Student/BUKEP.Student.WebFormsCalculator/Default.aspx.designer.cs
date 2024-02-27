@@ -42,6 +42,42 @@ namespace BUKEP.Student.WebFormsCalculator
         protected global::System.Web.UI.WebControls.TextBox displayText;
 
         /// <summary>
+        /// Save control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Save;
+
+        /// <summary>
+        /// BeforeResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BeforeResult;
+
+        /// <summary>
+        /// NextResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NextResult;
+
+        /// <summary>
+        /// ClearAllResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ClearAllResult;
+
+        /// <summary>
         /// ButtonClear control.
         /// </summary>
         /// <remarks>

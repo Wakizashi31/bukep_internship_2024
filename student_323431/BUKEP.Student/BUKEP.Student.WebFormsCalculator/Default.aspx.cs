@@ -1,22 +1,39 @@
 ﻿using BUKEP.Student.Calculator;
-using System.Linq;
+using BUKEP.Student.Calculator.Data;
 using System;
-using System.Web.UI;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Configuration;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
-using System.Web.Services.Description;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
 
 
 namespace BUKEP.Student.WebFormsCalculator
 {
     public partial class Default : System.Web.UI.Page
     {
+        private readonly string connectionString = WebConfigurationManager.ConnectionStrings["CalculatorDB"].ConnectionString;
+        private readonly  CalculationResultService storage;
         
+        private int CurrentPosition
+        {
+            get
+            {
+                if (ViewState["CurrentPosition"] != null)
+                    return (int)ViewState["CurrentPosition"];
+                return 0;
+            }
+            set
+            {
+                ViewState["CurrentPosition"] = value;
+            }
+        }
 
-        protected void ButtonAddElement(object sender, EventArgs e)
+        public Default()
+        {
+            storage = new CalculationResultService(connectionString);
+        }
+
+        protected void bElement_click(object sender, EventArgs e)
         {
             Button numButton = (Button)sender;
 
@@ -44,12 +61,12 @@ namespace BUKEP.Student.WebFormsCalculator
             }
         }
 
-        protected void DeleteAll(object sender, EventArgs e)
+        protected void bDeleteAll_click(object sender, EventArgs e)
         {
             displayText.Text = "0";
         }
 
-        protected void DeleteSymbol(object sender, EventArgs e)
+        protected void bDeleteSymbol_click(object sender, EventArgs e)
         {
             if (displayText.Text.Length > 1)
             {
@@ -61,7 +78,7 @@ namespace BUKEP.Student.WebFormsCalculator
             }
         }
 
-        protected void ButtonResult(object sender, EventArgs e)
+        protected void bResult_click(object sender, EventArgs e)
         {
             MathCalculator calculator = new MathCalculator();
 
@@ -85,6 +102,69 @@ namespace BUKEP.Student.WebFormsCalculator
                 displayText.Text = "Неизвестная ошибка";
             }
 
+        }
+
+        /// <summary>
+        /// Перейти к результату
+        /// </summary>
+        private void MoveToResult(int step)
+        {
+            List<CalculationResult> value = storage.GetAll();
+
+            if (value.Count == 0)
+            {
+                displayText.Text = "Нет результатов";
+                return;
+            }
+
+            CurrentPosition += step;
+
+            if (CurrentPosition < 0)
+            {
+                CurrentPosition = 0;
+            }
+            else if (CurrentPosition >= value.Count)
+            {
+                CurrentPosition = value.Count - 1;
+            }
+
+            displayText.Text = value[CurrentPosition].Value.ToString();
+        }
+
+        protected void bDbClearResults_click(object sender, EventArgs e)
+        {
+            try
+            {
+                storage.ClearData();
+                displayText.Text = "0";
+            }
+            catch (Exception)
+            {
+                displayText.Text = "Ошибка при очистке: ";
+            }
+        }
+
+        protected void bBeforeResult_click(object sender, EventArgs e)
+        {
+            MoveToResult(-1);
+        }
+
+        protected void bNextResult_click(object sender, EventArgs e)
+        {
+            MoveToResult(1);
+        }
+
+        protected void bSaveResult_click(object sender, EventArgs e)
+        {
+            try
+            {
+                double result = Convert.ToDouble(displayText.Text);               
+                storage.Save(result);
+            }
+            catch (Exception)
+            {
+                displayText.Text = "Ошибка при сохранении: ";
+            }
         }
     }
 }
