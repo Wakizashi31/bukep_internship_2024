@@ -5,9 +5,7 @@ using System.Text;
 
 namespace BUKEP.Student.Calculator.Data
 {
-    /// <summary>
-    /// Сервис результатов вычисления Entity Framework.
-    /// </summary>
+    /// <inheritdoc />
     public class EfCalculationResultService : ICalculationResultService
     {
         private readonly CalculationResultContext _context;
@@ -17,10 +15,7 @@ namespace BUKEP.Student.Calculator.Data
             _context = context;
         }
 
-        /// <summary>
-        /// Сохранить результат.
-        /// </summary>
-        /// <param name="value">Содержит результат вычисления, который будет сохранён.</param>
+        /// <inheritdoc />
         public void Save(double value)
         {
             var result = new CalculationResult { Value = value };
@@ -28,18 +23,13 @@ namespace BUKEP.Student.Calculator.Data
             _context.SaveChanges();
         }
 
-        /// <summary>
-        /// Получить все результаты вычислений. 
-        /// </summary>
-        /// <returns>Возвращает список объектов CalculationResult</returns>
+        /// <inheritdoc />
         public List<CalculationResult> GetAll()
         {
             return _context.calculationResult.ToList();
         }
 
-        /// <summary>
-        /// Очистить результаты вычислений.
-        /// </summary>
+        /// <inheritdoc />
         public void Clear()
         {
             _context.calculationResult.RemoveRange(_context.calculationResult);

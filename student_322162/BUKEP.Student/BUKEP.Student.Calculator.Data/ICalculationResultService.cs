@@ -5,9 +5,9 @@ using System.Text;
 namespace BUKEP.Student.Calculator.Data
 {
     /// <summary>
-    /// Интерфейс сервиса результатов вычисления.. 
+    /// Интерфейс сервиса результатов вычисления. 
     /// </summary>
-    internal interface ICalculationResultService
+    public interface ICalculationResultService
     {
         /// <summary>
         /// Сохранить результат.

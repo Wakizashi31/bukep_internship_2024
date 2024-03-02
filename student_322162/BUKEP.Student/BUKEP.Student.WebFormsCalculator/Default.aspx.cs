@@ -20,7 +20,7 @@ namespace BUKEP.Student.WebFormsCalculator
 
         private readonly CalculationResultContext context = new CalculationResultContext(connectionString);
 
-        private EfCalculationResultService EfStorage;
+        private ICalculationResultService calculationResultService;
 
         private int CurrentPosition
         {
@@ -38,7 +38,7 @@ namespace BUKEP.Student.WebFormsCalculator
 
         public Default()
         {
-            EfStorage = new EfCalculationResultService(context);
+            calculationResultService = new EfCalculationResultService(context);
         }
 
         protected void ButtonSave_Click(object sender, EventArgs e)
@@ -47,7 +47,7 @@ namespace BUKEP.Student.WebFormsCalculator
             {
                 double result = Convert.ToDouble(DisplayText.Text.Replace('=', ' '));
                 var calculationResult = new CalculationResult() { Value = result };
-                EfStorage.Save(result);
+                calculationResultService.Save(result);
             }
             catch (Exception)
             {
@@ -67,7 +67,7 @@ namespace BUKEP.Student.WebFormsCalculator
 
         private void MoveToResult(int step)
         {
-            List<CalculationResult> value = EfStorage.GetAll();
+            List<CalculationResult> value = calculationResultService.GetAll();
 
             if (value.Count == 0)
             {
@@ -93,7 +93,7 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                EfStorage.Clear();
+                calculationResultService.Clear();
                 DisplayText.Text = "0";
             }
             catch (Exception)
