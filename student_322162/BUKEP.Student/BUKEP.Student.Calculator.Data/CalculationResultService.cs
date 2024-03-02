@@ -5,10 +5,8 @@ using System.Text;
 
 namespace BUKEP.Student.Calculator.Data
 {
-    /// <summary>
-    /// Сервис результатов вычисления.
-    /// </summary>
-    public class CalculationResultService
+    /// <inheritdoc />
+    public class CalculationResultService : ICalculationResultService
     {
         private readonly string _connectionString;
 
@@ -17,10 +15,7 @@ namespace BUKEP.Student.Calculator.Data
             _connectionString = connectionString;
         }
 
-        /// <summary>
-        /// Сохранить результат.
-        /// </summary>
-        /// <param name="value">Содержит результат вычисления, который будет сохранён.</param>
+        /// <inheritdoc />
         public void Save(double value)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
@@ -40,10 +35,7 @@ namespace BUKEP.Student.Calculator.Data
             }
         }
 
-        /// <summary>
-        /// Получить все результаты вычислений. 
-        /// </summary>
-        /// <returns> Возвращает список объектов CalculationResult.</returns>
+        /// <inheritdoc />
         public List<CalculationResult> GetAll()
         {
             var results = new List<CalculationResult>();
@@ -73,9 +65,7 @@ namespace BUKEP.Student.Calculator.Data
             return results;
         }
 
-        /// <summary>
-        /// Очистить результаты вычислений. 
-        /// </summary>
+        /// <inheritdoc />
         public void Clear()
         {
             using (var connection = new SqlConnection(_connectionString))
