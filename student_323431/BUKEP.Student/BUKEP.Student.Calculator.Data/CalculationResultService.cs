@@ -7,7 +7,7 @@ namespace BUKEP.Student.Calculator.Data
 {   /// <summary>
     /// Сервис результатов вычисления
     /// </summary>
-    public class CalculationResultService
+    public class CalculationResultService : ICalculationResultService
     {
         private readonly string _connectionString;
         public CalculationResultService(string connectionString)
