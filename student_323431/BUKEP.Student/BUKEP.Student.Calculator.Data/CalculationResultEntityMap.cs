@@ -6,12 +6,12 @@ using System.Text;
 namespace BUKEP.Student.Calculator.Data
 {
     /// <summary>
-    /// Сопоставление свойств сущности с таблицей БД. 
+    /// Сопоставление свойств сущности с таблицей БД (CalculatorResult) . 
     /// </summary>
     internal class CalculationResultEntityMap : EntityTypeConfiguration<CalculationResult>
     {
         /// <summary>
-        /// Конструктор для сопоставлниея свойств сущности с таблицей БД.
+        /// Конструктор для сопоставлниея результатов вычислений с таблицей (CalculatorResult).
         /// </summary>
         public CalculationResultEntityMap()
         {

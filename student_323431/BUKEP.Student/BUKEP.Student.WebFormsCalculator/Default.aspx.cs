@@ -17,7 +17,9 @@ namespace BUKEP.Student.WebFormsCalculator
 
         private readonly static CalculationResultContext context = new CalculationResultContext(connectionString);
 
-        private readonly ICalculationResultService calculationResultService;
+        private ICalculationResultService calculationResultService = new EFCalculationResultService(connectionString);
+
+
 
 
         private int CurrentPosition
@@ -36,7 +38,7 @@ namespace BUKEP.Student.WebFormsCalculator
 
         public Default()
         {
-            calculationResultService = new EFCalculationService(context);
+            calculationResultService = new EFCalculationResultService(context);
         }
 
         protected void bElement_click(object sender, EventArgs e)
