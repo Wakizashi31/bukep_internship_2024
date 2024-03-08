@@ -14,13 +14,8 @@ namespace BUKEP.Student.WebFormsCalculator
     public partial class Default : System.Web.UI.Page
     {
         private readonly static string connectionString = WebConfigurationManager.ConnectionStrings["CalculatorDB"].ConnectionString;
-
-        private readonly static CalculationResultContext context = new CalculationResultContext(connectionString);
-
+      
         private ICalculationResultService calculationResultService = new EFCalculationResultService(connectionString);
-
-
-
 
         private int CurrentPosition
         {
@@ -34,11 +29,6 @@ namespace BUKEP.Student.WebFormsCalculator
             {
                 ViewState["CurrentPosition"] = value;
             }
-        }
-
-        public Default()
-        {
-            calculationResultService = new EFCalculationResultService(context);
         }
 
         protected void bElement_click(object sender, EventArgs e)

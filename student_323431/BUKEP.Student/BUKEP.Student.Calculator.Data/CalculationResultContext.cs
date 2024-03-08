@@ -4,12 +4,12 @@ using System.Data.Entity;
 using System.Text;
 
 namespace BUKEP.Student.Calculator.Data
-{
+{   /// <summary>
+    /// Контекст базы данных.
+    /// </summary>
     public class CalculationResultContext: DbContext
     {
-        /// <summary>
-        /// Коллекция базы данных
-        /// </summary>
+       
         public DbSet<CalculationResult> CalculationResults { get; set; }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace BUKEP.Student.Calculator.Data
 
         public CalculationResultContext(string connectionString) : base(connectionString)
         {
-            CalculationResults = Set<CalculationResult>();
+            
         }
 
         /// <summary>

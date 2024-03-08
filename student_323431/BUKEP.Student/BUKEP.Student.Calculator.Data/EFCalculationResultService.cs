@@ -9,13 +9,7 @@ namespace BUKEP.Student.Calculator.Data
     /// </summary>
     public class EFCalculationResultService : ICalculationResultService
     {
-        private readonly CalculationResultContext _context;
         private string connectionString;
-
-        public EFCalculationResultService(CalculationResultContext connectionString)
-        {
-            _context = connectionString;
-        }
 
         public EFCalculationResultService(string connectionString)
         {
@@ -28,9 +22,10 @@ namespace BUKEP.Student.Calculator.Data
         /// <param name="value">результат вычисления,который будет сохранен</param>
         public void Save(double value)
         {
-            var results = new CalculationResult {Value = value};
-            _context.CalculationResults.Add(results);
-            _context.SaveChanges();
+            CalculationResultContext context = new CalculationResultContext(connectionString);
+            CalculationResult results = new CalculationResult {Value = value};
+            context.CalculationResults.Add(results);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -39,7 +34,8 @@ namespace BUKEP.Student.Calculator.Data
         /// <returns>Возвращает список объектов</returns>
         public List<CalculationResult> GetAll()
         {
-            return _context.CalculationResults.ToList();
+            CalculationResultContext context = new CalculationResultContext(connectionString);
+            return context.CalculationResults.ToList();
         }
 
         /// <summary>
@@ -47,8 +43,9 @@ namespace BUKEP.Student.Calculator.Data
         /// </summary>
         public  void ClearData()
         {
-            _context.CalculationResults.RemoveRange(_context.CalculationResults);
-            _context.SaveChanges();
+            CalculationResultContext context = new CalculationResultContext(connectionString);
+            context.CalculationResults.RemoveRange(context.CalculationResults);
+            context.SaveChanges();
         }
     }
 }
