@@ -3,17 +3,20 @@ using BUKEP.Student.Calculator.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Web.Configuration;
 using System.Web.UI.WebControls;
+using System.Xml.Linq;
 
 
 namespace BUKEP.Student.WebFormsCalculator
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly string connectionString = WebConfigurationManager.ConnectionStrings["CalculatorDB"].ConnectionString;
-        private readonly  CalculationResultService storage;
-        
+        private readonly static string connectionString = WebConfigurationManager.ConnectionStrings["CalculatorDB"].ConnectionString;
+      
+        private ICalculationResultService calculationResultService = new EFCalculationResultService(connectionString);
+
         private int CurrentPosition
         {
             get
@@ -26,11 +29,6 @@ namespace BUKEP.Student.WebFormsCalculator
             {
                 ViewState["CurrentPosition"] = value;
             }
-        }
-
-        public Default()
-        {
-            storage = new CalculationResultService(connectionString);
         }
 
         protected void bElement_click(object sender, EventArgs e)
@@ -109,7 +107,7 @@ namespace BUKEP.Student.WebFormsCalculator
         /// </summary>
         private void MoveToResult(int step)
         {
-            List<CalculationResult> value = storage.GetAll();
+            List<CalculationResult> value = calculationResultService.GetAll();
 
             if (value.Count == 0)
             {
@@ -135,7 +133,7 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                storage.ClearData();
+                calculationResultService.ClearData();
                 displayText.Text = "0";
             }
             catch (Exception)
@@ -158,8 +156,8 @@ namespace BUKEP.Student.WebFormsCalculator
         {
             try
             {
-                double result = Convert.ToDouble(displayText.Text);               
-                storage.Save(result);
+                double result = Convert.ToDouble(displayText.Text);
+                calculationResultService.Save(result);
             }
             catch (Exception)
             {
