@@ -6,7 +6,7 @@ using System.Text;
 namespace BUKEP.Student.Calculator.Data
 {
     /// <summary>
-    /// Сопоставление одной сущности к одной таблице CalculatorResult
+    /// Сопоставление одной сущности CalculationResult к таблице CalculatorResult
     /// </summary>
     internal class CalculationResultEntityMap : EntityTypeConfiguration<CalculationResult>
     {
