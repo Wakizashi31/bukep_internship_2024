@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.WindowsCalcul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.WebFormsCalculator", "BUKEP.Student.WebFormsCalculator\BUKEP.Student.WebFormsCalculator.csproj", "{0A03D4D6-9BF4-4B6A-882C-D79C28A96B86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.Calculator.Data", "BUKEP.Student.Calculator.Data\BUKEP.Student.Calculator.Data.csproj", "{1E38C2C0-34A0-4069-96D9-5F131C88ED20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BUKEP.Student.Calculator.Data", "BUKEP.Student.Calculator.Data\BUKEP.Student.Calculator.Data.csproj", "{1E38C2C0-34A0-4069-96D9-5F131C88ED20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.MvcCalculator", "BUKEP.Student.MvcCalculator\BUKEP.Student.MvcCalculator.csproj", "{35BCBC00-EEE2-4F6F-8BA7-6D923BDFF5DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1E38C2C0-34A0-4069-96D9-5F131C88ED20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E38C2C0-34A0-4069-96D9-5F131C88ED20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E38C2C0-34A0-4069-96D9-5F131C88ED20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35BCBC00-EEE2-4F6F-8BA7-6D923BDFF5DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BCBC00-EEE2-4F6F-8BA7-6D923BDFF5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BCBC00-EEE2-4F6F-8BA7-6D923BDFF5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BCBC00-EEE2-4F6F-8BA7-6D923BDFF5DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

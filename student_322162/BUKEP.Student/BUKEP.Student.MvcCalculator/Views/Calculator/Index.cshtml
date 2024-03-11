@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Calculate", "Calculator", FormMethod.Post))
+{
+    <h3>Калькулятор</h3>
+    @Html.TextBox("displayText", null, new { @readonly = "readonly", @style = "text-align: right;" })
+    <br />
+    <input type="submit" name="ButtonInput" value="M" />
+    <input type="submit" name="ButtonInput" value="<S" />
+    <input type="submit" name="ButtonInput" value="S>" />
+    <input type="submit" name="BButtonInput" value="MC" />
+    <br />
+    <input type="submit" name="ButtonInput" value="C" />
+    <input type="submit" name="ButtonInput" value="⌫" />
+    <br />
+    <input type="submit" name="ButtonInput" value="^" />
+    <input type="submit" name="ButtonInput" value="(" />
+    <input type="submit" name="ButtonInput" value=")" />
+    <input type="submit" name="ButtonInput" value="÷" />
+    <br />
+    <input type="submit" name="ButtonInput" value="7" />
+    <input type="submit" name="ButtonInput" value="8" />
+    <input type="submit" name="ButtonInput" value="9" />
+    <input type="submit" name="ButtonInput" value="x" />
+    <br />
+    <input type="submit" name="ButtonInput" value="6" />
+    <input type="submit" name="ButtonInput" value="5" />
+    <input type="submit" name="ButtonInput" value="4" />
+    <input type="submit" name="ButtonInput" value="-" />
+    <br />
+    <input type="submit" name="ButtonInput" value="3" />
+    <input type="submit" name="ButtonInput" value="2" />
+    <input type="submit" name="ButtonInput" value="1" />
+    <input type="submit" name="ButtonInput" value="+" />
+    <br />
+    <input type="submit" name="ButtonInput" value="0" />
+    <input type="submit" name="ButtonInput" value="," />
+    <input type="submit" name="ButtonInput" value="=" />
+    <br />
+}
+
+
+
+
+
+@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+    </head>
+    <body>
+        <div>
+        </div>
+    </body>
+    </html>*@
