@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BUKEP.Student.Calculator.Data;
+using BUKEP.Student.Calculator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +11,17 @@ namespace BUKEP.Student.MvcCalculator.Controllers
     public class CalculatorController : Controller
     {
         private InputHandler inputHandler = new InputHandler();
+
+        private readonly ICalculationResultService _resultService;
+
+        private readonly MathCalculator _mathCalculator;
+
+        public CalculatorController(ICalculationResultService resultService, MathCalculator mathCalculator)
+        {
+            _resultService = resultService;
+            _mathCalculator = mathCalculator;
+        }
+
 
         public ActionResult Index(string display)
         {
@@ -36,6 +49,33 @@ namespace BUKEP.Student.MvcCalculator.Controllers
                 {
                     displayText = displayText.Remove(displayText.Length - 1, 1);
                 }
+            }
+
+            if (buttonInput == "=")
+            {
+                displayText = _mathCalculator.Calculate(inputHandler.ConvertToMathExpression(displayText)).ToString();
+            }
+
+            if (buttonInput == "M")
+            {
+                _resultService.Save(Convert.ToDouble(displayText));
+            }
+
+            if (buttonInput == "MC")
+            {
+                //_resultService.Clear();
+
+                displayText = "MC";
+            }
+
+            if (buttonInput == "<S")
+            {
+                displayText = "<S";
+            }
+
+            if (buttonInput == "S>")
+            {
+                displayText = "S>";
             }
 
             return RedirectToAction("Index", new { display = displayText });
