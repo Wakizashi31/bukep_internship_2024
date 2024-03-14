@@ -32,18 +32,17 @@ namespace BUKEP.Student.MvcCalculator.Controllers
         [HttpPost]
         public ActionResult Calculate(string displayText, string buttonInput)
         {
-
-            if (char.IsDigit(Convert.ToChar(buttonInput)) || "+-x÷^,()".Contains(Convert.ToChar(buttonInput)))
+            if (buttonInput.Length == 1)
             {
                 displayText = inputHandler.GetUpdatedInput(displayText, Convert.ToChar(buttonInput));
             }
 
-            if (buttonInput == "C")
+            if (buttonInput == "ButtonClear")
             {
                 displayText = null;
             }
 
-            if (buttonInput == "⌫")
+            if (buttonInput == "ButtonDeleteChar")
             {
                 if (displayText.Length > 0)
                 {
@@ -51,29 +50,27 @@ namespace BUKEP.Student.MvcCalculator.Controllers
                 }
             }
 
-            if (buttonInput == "=")
+            if (buttonInput == "ButtonResult")
             {
                 displayText = _mathCalculator.Calculate(inputHandler.ConvertToMathExpression(displayText)).ToString();
             }
 
-            if (buttonInput == "M")
+            if (buttonInput == "ButtonSave")
             {
                 _resultService.Save(Convert.ToDouble(displayText));
             }
 
-            if (buttonInput == "MC")
+            if (buttonInput == "ButtonClearAll")
             {
-                //_resultService.Clear();
-
-                displayText = "MC";
+                _resultService.Clear();
             }
 
-            if (buttonInput == "<S")
+            if (buttonInput == "ButtonNextResult")
             {
                 displayText = "<S";
             }
 
-            if (buttonInput == "S>")
+            if (buttonInput == "ButtonPreviousResult")
             {
                 displayText = "S>";
             }

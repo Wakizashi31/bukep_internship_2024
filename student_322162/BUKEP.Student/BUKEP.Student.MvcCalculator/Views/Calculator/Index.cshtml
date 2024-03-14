@@ -8,54 +8,46 @@
 {
     <h3>Калькулятор</h3>
     @Html.TextBox("displayText", null, new { @readonly = "readonly", @style = "text-align: right;" })
-    <br />
-    <input type="submit" name="ButtonInput" value="M" />
-    <input type="submit" name="ButtonInput" value="<S" />
-    <input type="submit" name="ButtonInput" value="S>" />
-    <input type="submit" name="BButtonInput" value="MC" />
-    <br />
-    <input type="submit" name="ButtonInput" value="C" />
-    <input type="submit" name="ButtonInput" value="⌫" />
-    <br />
-    <input type="submit" name="ButtonInput" value="^" />
-    <input type="submit" name="ButtonInput" value="(" />
-    <input type="submit" name="ButtonInput" value=")" />
-    <input type="submit" name="ButtonInput" value="÷" />
-    <br />
-    <input type="submit" name="ButtonInput" value="7" />
-    <input type="submit" name="ButtonInput" value="8" />
-    <input type="submit" name="ButtonInput" value="9" />
-    <input type="submit" name="ButtonInput" value="x" />
-    <br />
-    <input type="submit" name="ButtonInput" value="6" />
-    <input type="submit" name="ButtonInput" value="5" />
-    <input type="submit" name="ButtonInput" value="4" />
-    <input type="submit" name="ButtonInput" value="-" />
-    <br />
-    <input type="submit" name="ButtonInput" value="3" />
-    <input type="submit" name="ButtonInput" value="2" />
-    <input type="submit" name="ButtonInput" value="1" />
-    <input type="submit" name="ButtonInput" value="+" />
-    <br />
-    <input type="submit" name="ButtonInput" value="0" />
-    <input type="submit" name="ButtonInput" value="," />
-    <input type="submit" name="ButtonInput" value="=" />
-    <br />
+    <div class="button-row">
+        <button class="calc-dutton" name="ButtonInput" value="ButtonSave">M</button>
+        <button class="calc-dutton" name="ButtonInput" value="ButtonNextResult">&lt;S</button>
+        <button class="calc-dutton" name="ButtonInput" value="ButtonPreviousResult">S&gt;</button>
+        <button class="calc-dutton" name="ButtonInput" value="ButtonClearAll">MS</button>
+    </div>
+    <div class="button-row">
+        <button class="calc-dutton" name="ButtonInput" value="ButtonClear">C</button>
+        <button class="calc-dutton" name="ButtonInput" value="ButtonDeleteChar">⌫</button>
+    </div>
+    <div class="button-row">
+        <button class="calc-dutton" name="ButtonInput" value="^">^</button>
+        <button class="calc-dutton" name="ButtonInput" value="(">(</button>
+        <button class="calc-dutton" name="ButtonInput" value=")">)</button>
+        <button class="calc-dutton" name="ButtonInput" value="÷">÷</button>
+    </div>
+    <div class="button-row">
+        <button class="calc-dutton" name="ButtonInput" value="7">7</button>
+        <button class="calc-dutton" name="ButtonInput" value="8">8</button>
+        <button class="calc-dutton" name="ButtonInput" value="9">9</button>
+        <button class="calc-dutton" name="ButtonInput" value="x">x</button>
+    </div>
+    <div class="button-row">
+        <button class="calc-dutton" name="ButtonInput" value="6">6</button>
+        <button class="calc-dutton" name="ButtonInput" value="5">5</button>
+        <button class="calc-dutton" name="ButtonInput" value="4">4</button>
+        <button class="calc-dutton" name="ButtonInput" value="-">-</button>
+    </div>
+    <div class="button-row">
+        <button class="calc-dutton" name="ButtonInput" value="3">3</button>
+        <button class="calc-dutton" name="ButtonInput" value="2">2</button>
+        <button class="calc-dutton" name="ButtonInput" value="1">1</button>
+        <button class="calc-dutton" name="ButtonInput" value="+">+</button>
+    </div>
+    <div class="button-row">
+        <button class="calc-dutton" name="ButtonInput" value="0">0</button>
+        <button class="calc-dutton" name="ButtonInput" value=",">,</button>
+        <button class="calc-dutton" name="ButtonInput" value="ButtonResult">=</button>
+    </div>
 }
 
 
 
-
-
-@*<!DOCTYPE html>
-
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Index</title>
-    </head>
-    <body>
-        <div>
-        </div>
-    </body>
-    </html>*@
