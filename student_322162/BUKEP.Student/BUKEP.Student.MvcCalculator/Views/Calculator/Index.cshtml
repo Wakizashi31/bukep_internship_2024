@@ -1,13 +1,15 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
+
+
 
 
 @using (Html.BeginForm("Calculate", "Calculator", FormMethod.Post))
 {
     <h3>Калькулятор</h3>
-    @Html.TextBox("displayText", null, new { @readonly = "readonly", @style = "text-align: right;" })
+    @Html.TextBox("displayText", null, new {@class= "display-style", @readonly = "readonly", @style = "text-align: right;" })
     <div class="button-row">
         <button class="calc-dutton" name="ButtonInput" value="ButtonSave">M</button>
         <button class="calc-dutton" name="ButtonInput" value="ButtonNextResult">&lt;S</button>

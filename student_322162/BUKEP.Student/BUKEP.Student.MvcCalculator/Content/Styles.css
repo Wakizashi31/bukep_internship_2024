@@ -1,0 +1,25 @@
+﻿
+body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.calc-dutton {
+    width: 80px;
+    height: 80px;
+    border: revert;
+    margin-top: 5px;
+    font-size: 2em;
+}
+
+.display-style {
+    width: 350px;
+    height: 40px;
+    font-size: 2em;
+    text-align: right;
+    border: revert;
+}
