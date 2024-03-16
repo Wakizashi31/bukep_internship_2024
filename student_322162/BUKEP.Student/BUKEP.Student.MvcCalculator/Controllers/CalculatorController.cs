@@ -16,6 +16,8 @@ namespace BUKEP.Student.MvcCalculator.Controllers
 
         private readonly MathCalculator _mathCalculator;
 
+        private int currentPosition = 0;
+
         public CalculatorController(ICalculationResultService resultService, MathCalculator mathCalculator)
         {
             _resultService = resultService;
@@ -50,14 +52,32 @@ namespace BUKEP.Student.MvcCalculator.Controllers
                 }
             }
 
-            if (buttonInput == "ButtonResult")
-            {
-                displayText = _mathCalculator.Calculate(inputHandler.ConvertToMathExpression(displayText)).ToString();
-            }
-
+           if (buttonInput == "ButtonResult")
+           {
+               try
+               {
+                    displayText = _mathCalculator.Calculate(inputHandler.ConvertToMathExpression(displayText)).ToString();
+               }
+               catch (DivideByZeroException)
+               {
+                   displayText = "Деление на ноль!";
+               }
+               catch (ArgumentException)
+               {
+                   displayText = "Неверное выражение!!";
+               }
+           }
+           
             if (buttonInput == "ButtonSave")
             {
-                _resultService.Save(Convert.ToDouble(displayText));
+                try
+                {
+                    _resultService.Save(Convert.ToDouble(displayText));
+                }
+                catch (Exception)
+                {
+                    displayText = "Ошибка сохранения!";
+                }
             }
 
             if (buttonInput == "ButtonClearAll")
@@ -67,15 +87,60 @@ namespace BUKEP.Student.MvcCalculator.Controllers
 
             if (buttonInput == "ButtonNextResult")
             {
-                displayText = "<S";
+                if (Session["CurrentPosition"] != null)
+                {
+                    currentPosition = Convert.ToInt32(Session["CurrentPosition"]);
+                }
+
+                MoveToResult(-1);
+                List<CalculationResult> value = _resultService.GetAll();
+
+                if (currentPosition >= 0 && currentPosition < value.Count)
+                {
+                    displayText = value[currentPosition].Value.ToString();
+                }
             }
 
             if (buttonInput == "ButtonPreviousResult")
             {
-                displayText = "S>";
+                if (Session["CurrentPosition"] != null)
+                {
+                    currentPosition = Convert.ToInt32(Session["CurrentPosition"]);
+                }
+
+                MoveToResult(1);
+                List<CalculationResult> value = _resultService.GetAll();
+
+                if (currentPosition >= 0 && currentPosition < value.Count)
+                {
+                    displayText = value[currentPosition].Value.ToString();
+                }
             }
 
             return RedirectToAction("Index", new { display = displayText });
+        }
+
+        private void MoveToResult(int step)
+        {
+            List<CalculationResult> value = _resultService.GetAll();
+
+            if (value.Count == 0)
+            {
+                return;
+            }
+
+            currentPosition += step;
+
+            if (currentPosition < 0)
+            {
+                currentPosition = 0;
+            }
+            else if (currentPosition >= value.Count)
+            {
+                currentPosition = value.Count - 1;
+            }
+
+            Session["CurrentPosition"] = currentPosition;
         }
 
     }
