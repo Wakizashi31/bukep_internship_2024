@@ -3,51 +3,63 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-
-@using (Html.BeginForm("Calculate", "Calculator", FormMethod.Post))
-{
-    <h3>Калькулятор</h3>
-    @Html.TextBox("displayText",null, new { @class = "display-style", @readonly = "readonly", @style = "text-align: right;" })
-    <div class="button-row">
-        <button class="calc-dutton" name="ButtonInput" value="ButtonSave">M</button>
-        <button class="calc-dutton" name="ButtonInput" value="ButtonNextResult">&lt;S</button>
-        <button class="calc-dutton" name="ButtonInput" value="ButtonPreviousResult">S&gt;</button>
-        <button class="calc-dutton" name="ButtonInput" value="ButtonClearAll">MS</button>
-    </div>
-    <div class="button-row">
-        <button class="calc-dutton" name="ButtonInput" value="ButtonClear">C</button>
-        <button class="calc-dutton" name="ButtonInput" value="ButtonDeleteChar">⌫</button>
-    </div>
-    <div class="button-row">
-        <button class="calc-dutton" name="ButtonInput" value="^">^</button>
-        <button class="calc-dutton" name="ButtonInput" value="(">(</button>
-        <button class="calc-dutton" name="ButtonInput" value=")">)</button>
-        <button class="calc-dutton" name="ButtonInput" value="÷">÷</button>
-    </div>
-    <div class="button-row">
-        <button class="calc-dutton" name="ButtonInput" value="7">7</button>
-        <button class="calc-dutton" name="ButtonInput" value="8">8</button>
-        <button class="calc-dutton" name="ButtonInput" value="9">9</button>
-        <button class="calc-dutton" name="ButtonInput" value="x">x</button>
-    </div>
-    <div class="button-row">
-        <button class="calc-dutton" name="ButtonInput" value="6">6</button>
-        <button class="calc-dutton" name="ButtonInput" value="5">5</button>
-        <button class="calc-dutton" name="ButtonInput" value="4">4</button>
-        <button class="calc-dutton" name="ButtonInput" value="-">-</button>
-    </div>
-    <div class="button-row">
-        <button class="calc-dutton" name="ButtonInput" value="3">3</button>
-        <button class="calc-dutton" name="ButtonInput" value="2">2</button>
-        <button class="calc-dutton" name="ButtonInput" value="1">1</button>
-        <button class="calc-dutton" name="ButtonInput" value="+">+</button>
-    </div>
-    <div class="button-row">
-        <button class="calc-dutton" name="ButtonInput" value="0">0</button>
-        <button class="calc-dutton" name="ButtonInput" value=",">,</button>
-        <button class="calc-dutton" name="ButtonInput" value="ButtonResult">=</button>
-    </div>
-}
+<h3>Калькулятор</h3>
+@Html.TextBox("displayText", null, new { @class = "display-style", @readonly = "readonly", @style = "text-align: right;" })
+<div class="button-row">
+    @Html.ActionLink("M", "ButtonSave", "Calculator", new { @class = "btn" })
+    @Html.ActionLink("<S", "ButtonNextResult", "Calculator", new { @class = "btn" })
+    @Html.ActionLink("S>", "ButtonPreviousResult", "Calculator", new { @class = "btn" })
+    @Html.ActionLink("MS", "ButtonClearAllDB", "Calculator", new { @class = "btn" })
+</div>
+<div class="button-row">
+    <button class="calc-dutton" name="ButtonInput" onclick="cleaningDisplay('Clear')" value="ButtonClear">C</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="cleaningDisplay('DeleteChar')" value="ButtonDeleteChar">⌫</button>
+</div>
+<div class="button-row">
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('^')" value="^">^</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('(')" value="(">(</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay(')')" value=")">)</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('÷')" value="÷">÷</button>
+</div>
+<div class="button-row">
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('7')" value="7">7</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('8')" value="8">8</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('9')" value="9">9</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('x')" value="x">x</button>
+</div>
+<div class="button-row">
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('6')" value="6">6</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('5')" value="5">5</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('4')" value="4">4</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('-')" value="-">-</button>
+</div>
+<div class="button-row">
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('3')" value="3">3</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('2')" value="2">2</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('1')" value="1">1</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('+')" value="+">+</button>
+</div>
+<div class="button-row">
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay('0')" value="0">0</button>
+    <button class="calc-dutton" name="ButtonInput" onclick="addToDisplay(',')" value=",">,</button>
+    @Html.ActionLink("=", "CalculateResult", "Calculator", new { @class = "btn"})
+</div>
 
 
+<script>
+    function addToDisplay(value) {
+        document.getElementById('displayText').value += value;
+    }
+
+    function cleaningDisplay(value) {
+        if (value === 'Clear') {
+            document.getElementById('displayText').value = '';
+        }
+
+        if (value === 'DeleteChar') {
+            document.getElementById('displayText').value = document.getElementById('displayText').value.slice(0, -1);
+        }
+    }
+
+</script>
 
