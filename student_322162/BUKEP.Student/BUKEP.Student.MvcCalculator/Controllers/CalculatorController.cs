@@ -10,13 +10,9 @@ namespace BUKEP.Student.MvcCalculator.Controllers
 {
     public class CalculatorController : Controller
     {
-        private InputHandler inputHandler = new InputHandler();
-
         private readonly ICalculationResultService _resultService;
 
         private readonly MathCalculator _mathCalculator;
-
-        private int currentPosition = 0;
 
         public CalculatorController(ICalculationResultService resultService, MathCalculator mathCalculator)
         {
@@ -31,11 +27,73 @@ namespace BUKEP.Student.MvcCalculator.Controllers
             return View();
         }
 
-        public ActionResult CalculateResult(string display)
+        [HttpPost]
+        public JsonResult SaveResult(string display)
         {
-            string result = _mathCalculator.Calculate(display).ToString();
-            return RedirectToAction("Index", new { display = result });
-            //return View();
+            try
+            {
+                _resultService.Save(Convert.ToDouble(display));
+                return Json(display);
+            }
+            catch
+            {
+                return Json("Ошибка сохранения!");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ClearDB(string display)
+        {
+            try
+            {
+                _resultService.Clear();
+                return Json(display);
+            }
+            catch
+            {
+                return Json("Ошибка очистки!");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetAllResults()
+        {
+            try
+            {
+                List<CalculationResult> results = _resultService.GetAll();
+                return Json(results);
+            }
+            catch
+            {
+                return Json("Ошибка при получении результатов!");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult CalculateResult(string display)
+        {
+            try
+            {
+                string result = _mathCalculator.Calculate(ConvertToMathExpression(display)).ToString();
+                return Json(result);
+            }
+            catch (DivideByZeroException)
+            {
+                return Json("Деление на ноль!");
+            }
+            catch (ArgumentException)
+            {
+                return Json("Неверное выражение!");
+            }
+        }
+
+        public string ConvertToMathExpression(string input)
+        {
+            input = input.Replace('÷', '/');
+            input = input.Replace(',', '.');
+            input = input.Replace('x', '*');
+
+            return input;
         }
     }
 }
