@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace BUKEP.Student.MvcCalculator.Controllers
 {
@@ -20,61 +21,36 @@ namespace BUKEP.Student.MvcCalculator.Controllers
             _mathCalculator = mathCalculator;
         }
 
-        [HttpGet]
-        public ActionResult Index(string display)
+        public ActionResult Index()
         {
-            ViewBag.DisplayText = display;
             return View();
         }
 
         [HttpPost]
-        public JsonResult SaveResult(string display)
+        public void SaveResult(string expression)
         {
-            try
-            {
-                _resultService.Save(Convert.ToDouble(display));
-                return Json(display);
-            }
-            catch
-            {
-                return Json("Ошибка сохранения!");
-            }
+            _resultService.Save(Convert.ToDouble(expression));
         }
 
         [HttpPost]
-        public JsonResult ClearDB(string display)
+        public void ClearDB()
         {
-            try
-            {
-                _resultService.Clear();
-                return Json(display);
-            }
-            catch
-            {
-                return Json("Ошибка очистки!");
-            }
+            _resultService.Clear();
         }
 
         [HttpPost]
         public JsonResult GetAllResults()
         {
-            try
-            {
-                List<CalculationResult> results = _resultService.GetAll();
-                return Json(results);
-            }
-            catch
-            {
-                return Json("Ошибка при получении результатов!");
-            }
+            List<CalculationResult> results = _resultService.GetAll();
+            return Json(results);
         }
 
         [HttpPost]
-        public JsonResult CalculateResult(string display)
+        public JsonResult CalculateResult(string expression)
         {
             try
             {
-                string result = _mathCalculator.Calculate(ConvertToMathExpression(display)).ToString();
+                string result = _mathCalculator.Calculate(ConvertToMathExpression(expression)).ToString();
                 return Json(result);
             }
             catch (DivideByZeroException)
@@ -87,7 +63,7 @@ namespace BUKEP.Student.MvcCalculator.Controllers
             }
         }
 
-        public string ConvertToMathExpression(string input)
+        private string ConvertToMathExpression(string input)
         {
             input = input.Replace('÷', '/');
             input = input.Replace(',', '.');

@@ -7,9 +7,9 @@
 @Html.TextBox("displayText", "0", new { @class = "display-style", @readonly = "readonly", @style = "text-align: right;" })
 <div class="button-row">
     <button class="calc-button" onclick="saveResult()">M</button>
-    <button class="calc-button" onclick="viewingResults('nextResult')">&lt;S</button>
-    <button class="calc-button" onclick="viewingResults('previousResult')">S&gt;</button>
-    <button class="calc-button" onclick="ClearAllDB()">MS</button>
+    <button class="calc-button" onclick="showNextResult()">&lt;S</button>
+    <button class="calc-button" onclick="showPreviousResult()">S&gt;</button>
+    <button class="calc-button" onclick="clearAllDB()">MS</button>
 </div>
 <div class="button-row">
     <button class="calc-button" onclick="clearDisplay()">C</button>
@@ -58,16 +58,16 @@
 
         function containsDecimalInLastNumber() {
             let numbers = currentValue.split(/[\+\-\x\÷\^]/);
-            let lastNumber = numbers[numbers.length - 1]; 
+            let lastNumber = numbers[numbers.length - 1];
             return lastNumber.includes(',');
         }
 
         if (value === ',' && containsDecimalInLastNumber()) {
-            return; 
+            return;
         }
 
         if (isOperator(value) && isOperator(lastChar)) {
-            display.value = currentValue.slice(0, -1) + value; 
+            display.value = currentValue.slice(0, -1) + value;
             return;
         }
 
@@ -77,7 +77,7 @@
         }
 
         if (currentValue === '0' && !isOperator(value) && value !== ',') {
-            display.value = value; 
+            display.value = value;
             return;
         }
 
@@ -105,7 +105,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({display: value})
+                body: JSON.stringify({ display: value })
             });
 
         let result = await response.json();
@@ -121,48 +121,57 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ display: value })
+                body: JSON.stringify({ expression: value })
             });
 
-        let result = await response.json();
-        document.getElementById('displayText').value = result;
+        if (!response.ok) {
+            document.getElementById('displayText').value = "Ошибка сохранения!";
+        }
     }
 
-    async function ClearAllDB() {
+    async function clearAllDB() {
         let response = await fetch("/Calculator/ClearDB",
             {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
-        );
+                method: "POST"
+            });
 
-        let result = await response.json();
-        document.getElementById('displayText').value = result;
+        if (!response.ok) {
+            document.getElementById('displayText').value = "Ошибка очистки!";
+        }
     }
 
-
     let currentPosition = 0;
+    let calculationResults = [];
 
-    async function viewingResults(direction) {
-        let calculationResults = [];
+    async function loadResults() {
         let response = await fetch("/Calculator/GetAllResults", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             }
         });
+
+        if (!response.ok) {
+            document.getElementById('displayText').value = "Ошибка получения результатов!";
+            return; 
+        }
         calculationResults = await response.json();
+    }
 
-        if (direction === 'nextResult' && currentPosition < calculationResults.length - 1) {
+    async function showNextResult() {
+        await loadResults();
+        if (currentPosition < calculationResults.length - 1) {
             currentPosition++;
+            document.getElementById('displayText').value = calculationResults[currentPosition].Value;
         }
-        if (direction === 'previousResult' && currentPosition > 0) {
-            currentPosition--;
-        }
+    }
 
-        document.getElementById('displayText').value = calculationResults[currentPosition].Value; 
+    async function showPreviousResult() {
+        await loadResults();
+        if (currentPosition > 0) {
+            currentPosition--;
+            document.getElementById('displayText').value = calculationResults[currentPosition].Value;
+        }
     }
 
 </script>
