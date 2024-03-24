@@ -7,8 +7,8 @@
 @Html.TextBox("displayText", "0", new { @class = "display-style", @readonly = "readonly", @style = "text-align: right;" })
 <div class="button-row">
     <button class="calc-button" onclick="saveResult()">M</button>
-    <button class="calc-button" onclick="showNextResult()">&lt;S</button>
-    <button class="calc-button" onclick="showPreviousResult()">S&gt;</button>
+    <button class="calc-button" onclick="showPreviousResult()">&lt;S</button>
+    <button class="calc-button" onclick="showNextResult()">S&gt;</button>
     <button class="calc-button" onclick="clearAllDB()">MS</button>
 </div>
 <div class="button-row">
@@ -129,18 +129,7 @@
         }
     }
 
-    async function clearAllDB() {
-        let response = await fetch("/Calculator/ClearDB",
-            {
-                method: "POST"
-            });
-
-        if (!response.ok) {
-            document.getElementById('displayText').value = "Ошибка очистки!";
-        }
-    }
-
-    let currentPosition = 0;
+    let currentPosition = -1;
     let calculationResults = [];
 
     async function loadResults() {
@@ -174,5 +163,17 @@
         }
     }
 
+    async function clearAllDB() {
+        let response = await fetch("/Calculator/ClearDB",
+            {
+                method: "POST"
+            });
+
+        currentPosition = -1;
+
+        if (!response.ok) {
+            document.getElementById('displayText').value = "Ошибка очистки!";
+        }
+    }
 </script>
 
