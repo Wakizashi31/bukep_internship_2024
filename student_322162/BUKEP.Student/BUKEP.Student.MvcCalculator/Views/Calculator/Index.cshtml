@@ -1,0 +1,179 @@
+﻿
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Калькулятор</h3>
+@Html.TextBox("displayText", "0", new { @class = "display-style", @readonly = "readonly", @style = "text-align: right;" })
+<div class="button-row">
+    <button class="calc-button" onclick="saveResult()">M</button>
+    <button class="calc-button" onclick="showPreviousResult()">&lt;S</button>
+    <button class="calc-button" onclick="showNextResult()">S&gt;</button>
+    <button class="calc-button" onclick="clearAllDB()">MS</button>
+</div>
+<div class="button-row">
+    <button class="calc-button" onclick="clearDisplay()">C</button>
+    <button class="calc-button" onclick="deleteCharDisplay()">⌫</button>
+</div>
+<div class="button-row">
+    <button class="calc-button" onclick="addToDisplay('^')">^</button>
+    <button class="calc-button" onclick="addToDisplay('(')">(</button>
+    <button class="calc-button" onclick="addToDisplay(')')">)</button>
+    <button class="calc-button" onclick="addToDisplay('÷')">÷</button>
+</div>
+<div class="button-row">
+    <button class="calc-button" onclick="addToDisplay('7')">7</button>
+    <button class="calc-button" onclick="addToDisplay('8')">8</button>
+    <button class="calc-button" onclick="addToDisplay('9')">9</button>
+    <button class="calc-button" onclick="addToDisplay('x')">x</button>
+</div>
+<div class="button-row">
+    <button class="calc-button" onclick="addToDisplay('6')">6</button>
+    <button class="calc-button" onclick="addToDisplay('5')">5</button>
+    <button class="calc-button" onclick="addToDisplay('4')">4</button>
+    <button class="calc-button" onclick="addToDisplay('-')">-</button>
+</div>
+<div class="button-row">
+    <button class="calc-button" onclick="addToDisplay('3')">3</button>
+    <button class="calc-button" onclick="addToDisplay('2')">2</button>
+    <button class="calc-button" onclick="addToDisplay('1')">1</button>
+    <button class="calc-button" onclick="addToDisplay('+')">+</button>
+</div>
+<div class="button-row">
+    <button class="calc-button" onclick="addToDisplay('0')">0</button>
+    <button class="calc-button" onclick="addToDisplay(',')">,</button>
+    <button class="calc-button" onclick="calculate()">=</button>
+</div>
+
+
+<script>
+    function addToDisplay(value) {
+        let display = document.getElementById('displayText');
+        let currentValue = display.value;
+        let lastChar = currentValue.slice(-1);
+
+        function isOperator(character) {
+            return ["+", "-", "x", "÷", "^"].includes(character);
+        }
+
+        function containsDecimalInLastNumber() {
+            let numbers = currentValue.split(/[\+\-\x\÷\^]/);
+            let lastNumber = numbers[numbers.length - 1];
+            return lastNumber.includes(',');
+        }
+
+        if (value === ',' && containsDecimalInLastNumber()) {
+            return;
+        }
+
+        if (isOperator(value) && isOperator(lastChar)) {
+            display.value = currentValue.slice(0, -1) + value;
+            return;
+        }
+
+        if ((currentValue === '' || isOperator(lastChar)) && value === ',') {
+            display.value += '0,';
+            return;
+        }
+
+        if (currentValue === '0' && !isOperator(value) && value !== ',') {
+            display.value = value;
+            return;
+        }
+
+        display.value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById('displayText').value = '0';
+    }
+
+    function deleteCharDisplay() {
+        let display = document.getElementById('displayText');
+        display.value = display.value.slice(0, -1);
+        if (display.value === '') {
+            display.value = '0';
+        }
+    }
+
+    async function calculate() {
+        let value = document.getElementById('displayText').value;
+
+        let response = await fetch("/Calculator/CalculateResult",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ expression: value })
+            });
+
+        let result = await response.json();
+        document.getElementById('displayText').value = result;
+    }
+
+    async function saveResult() {
+        let value = document.getElementById('displayText').value;
+
+        let response = await fetch("/Calculator/SaveResult",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ expression: value })
+            });
+
+        if (!response.ok) {
+            document.getElementById('displayText').value = "Ошибка сохранения!";
+        }
+    }
+
+    let currentPosition = -1;
+    let calculationResults = [];
+
+    async function loadResults() {
+        let response = await fetch("/Calculator/GetAllResults", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            document.getElementById('displayText').value = "Ошибка получения результатов!";
+            return; 
+        }
+        calculationResults = await response.json();
+    }
+
+    async function showNextResult() {
+        await loadResults();
+        if (currentPosition < calculationResults.length - 1) {
+            currentPosition++;
+            document.getElementById('displayText').value = calculationResults[currentPosition].Value;
+        }
+    }
+
+    async function showPreviousResult() {
+        await loadResults();
+        if (currentPosition > 0) {
+            currentPosition--;
+            document.getElementById('displayText').value = calculationResults[currentPosition].Value;
+        }
+    }
+
+    async function clearAllDB() {
+        let response = await fetch("/Calculator/ClearDB",
+            {
+                method: "POST"
+            });
+
+        currentPosition = -1;
+
+        if (!response.ok) {
+            document.getElementById('displayText').value = "Ошибка очистки!";
+        }
+    }
+</script>
+
