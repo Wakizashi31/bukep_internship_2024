@@ -15,7 +15,7 @@
 <body>  
     <div class="Wrapper">
         <section class="screen">
-            <input type="text"readonly" id="Display" value="0" style="width: 410px; height: 70px; border-radius: 20px; background-color:#ffffff; font-size:1.8rem;"/>
+            <input  id="Display" value="0" readonly style="width: 410px; height: 70px; border-radius: 20px; background-color:#ffffff; font-size:1.8rem;"/>
         </section>
         <section class="calc-buttons">
             <div class="calc-button">
@@ -117,10 +117,15 @@
     <script>
 
         function bElemetAdd(value) {
-            let display = document.getElementById('Display');
-            display.value += value
-            
+            let display = document.getElementById("Display");
+
+            if (display.value === "0" && value !== "0") {
+                display.value = value;
+            } else if (!isNaN(display.value[display.value.length - 1]) && !isNaN(value)) {
+                display.value += value;
+            }
         }
+
 
         function ClearAll() {
             let display = document.getElementById('Display');
@@ -134,6 +139,7 @@
                 display.value = '0';
             }
         }
+        
 
         
     </script>

@@ -75,7 +75,7 @@ namespace BUKEP.Student.WebFormsCalculator
                 displayText.Text = "0";
             }
         }
-
+        
         protected void bResult_click(object sender, EventArgs e)
         {
             MathCalculator calculator = new MathCalculator();
