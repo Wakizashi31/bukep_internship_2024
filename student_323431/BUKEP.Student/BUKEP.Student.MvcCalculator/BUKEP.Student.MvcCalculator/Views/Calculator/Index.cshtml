@@ -15,7 +15,7 @@
 <body>  
     <div class="Wrapper">
         <section class="screen">
-            <input  id="Display" value="0" readonly style="width: 410px; height: 70px; border-radius: 20px; background-color:#ffffff; font-size:1.8rem;"/>
+            <input id="Display" value="0" text-align:right readonly style="width: 410px; height: 70px; border-radius: 20px; background-color:#ffffff; font-size:1.8rem;"/>
         </section>
         <section class="calc-buttons">
             <div class="calc-button">
@@ -105,8 +105,8 @@
                 <button class="BZero" onclick="bElemetAdd('0')">
                     0
                 </button>
-                <button class="comma" onclick="bElemetAdd(',')">
-                    ,
+                <button class="comma" onclick="bElemetAdd('.')">
+                    .
                 </button>
                 <button class="Result" onclick="bResult('=')">
                     =
@@ -119,13 +119,34 @@
         function bElemetAdd(value) {
             let display = document.getElementById("Display");
 
+            if (value === '0' && display.value === '0') {
+                return;
+            }
+
+            if (value === '.' && display.value.includes('.')) {
+                const lastCommaIndex = display.value.lastIndexOf('.');
+                const lastOperatorIndex = display.value.search(/[+\-*/]/);
+                if (lastCommaIndex > lastOperatorIndex) {
+                    return;
+                }
+            }
+
+            const operators = ['+', '-', '*', '/', '^'];
+            if (operators.includes(value)) {
+                const lastChar = display.value.charAt(display.value.length - 1);
+                if (operators.includes(lastChar)) {
+                    display.value = display.value.slice(0, -1) + value;
+                    return;
+                }
+            }
+
             if (display.value === "0" && value !== "0") {
                 display.value = value;
-            } else if (!isNaN(display.value[display.value.length - 1]) && !isNaN(value)) {
-                display.value += value;
+            }
+            else {
+            display.value += value;
             }
         }
-
 
         function ClearAll() {
             let display = document.getElementById('Display');
@@ -135,12 +156,44 @@
         function DeleteSymbol() {
             let display = document.getElementById('Display');
             display.value = display.value.slice(0, -1);
+
             if (display.value === '') {
                 display.value = '0';
             }
         }
-        
 
+        async function bResult() {
+            let value = document.getElementById('Display').value;
+            
+            let response = await fetch("/Calculator/CalculateResult",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ expression: value })
+                });
+            
+            let result = await response.json();
+            document.getElementById('Display').value = result;
+        }
+
+        async function bSaveResult() {
+            let value = document.getElementById('Display').value;
+
+            let response = await fetch("/Calculator/bSaveResult",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ expression: value })
+                });
+
+            if (!response.ok) {
+                document.getElementById('Display').value = "Ошибка сохранения!";
+            }
+        }
         
     </script>
 </body>
