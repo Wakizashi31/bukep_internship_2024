@@ -45,8 +45,10 @@ namespace BUKEP.Student.MvcCalculator
         public static void RegisterTypes(IUnityContainer container)
         {          
             container.RegisterType<MathCalculator>();
-            container.RegisterType<ICalculationResultService, EFCalculationResultService>(new InjectionConstructor((ConfigurationManager.ConnectionStrings["DbMvcCalc"].ConnectionString)));
+            container.RegisterType<ICalculationResultService, EFCalculationResultService>(new InjectionConstructor((WebConfigurationManager.ConnectionStrings["DbMvcCalc"].ConnectionString)));
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            
+
         }
     }
 }
