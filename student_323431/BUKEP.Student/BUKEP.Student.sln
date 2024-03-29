@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.WebFormsCalcu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BUKEP.Student.Calculator.Data", "BUKEP.Student.Calculator.Data\BUKEP.Student.Calculator.Data.csproj", "{B79D68A3-9C86-4DE6-B27F-D544B547D3D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.MvcCalculator", "BUKEP.Student.MvcCalculator\BUKEP.Student.MvcCalculator\BUKEP.Student.MvcCalculator.csproj", "{F5C2150B-02BE-4294-B900-16165D9212BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.MvcCalculator", "BUKEP.Student.MvcCalculator\BUKEP.Student.MvcCalculator.csproj", "{F5C2150B-02BE-4294-B900-16165D9212BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

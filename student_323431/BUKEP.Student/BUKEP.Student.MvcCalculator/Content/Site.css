@@ -1,0 +1,99 @@
+﻿
+.CalcOperation {
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    background-color: aqua;
+    font-size: 1.8rem;
+    font-weight: 1000;
+}
+
+.Numbers {
+    width: 100px;
+    height: 100px;
+    background-color: #b5b5b5;
+    border-radius: 35px;
+    font-size: 1.8rem;
+    font-weight:1000;
+}
+
+.BdOperation {
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    background-color: aqua;
+    font-size: 1.8rem;
+    font-weight:1000;
+}
+
+.MathOperation {
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    background-color: orange;
+    font-size: 1.8rem;
+    font-weight: 1000;
+}
+
+.CalcDSymbol {
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    background-color: aqua;
+    font-size: 1.8rem;
+    font-weight: 1000;
+}
+
+.BZero {
+    width: 100px;
+    height: 100px;
+    margin-left: 55px;
+    border-radius: 35px;
+    background-color: #808080;
+    font-size: 1.8rem;
+    font-weight: 1000;
+}
+
+.comma {
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    background-color: #808080;
+    font-size: 2.0rem;
+    font-weight: 1000;
+}
+
+.result {
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    background-color: orange;
+    font-size: 1.5rem;
+    font-weight: 1000;
+}
+
+body {
+    background:linear-gradient(90deg, #000000, #808080);
+    display: flex;
+    justify-content: center;
+    align-items: center.
+}
+
+.lebel {
+    margin-left: 125px;
+    font-size: 1.8rem;
+    color: white;
+    font-style: normal;
+    font-weight: 1000;
+}
+
+
+
+
+    
+
+
+    
+
+
+
