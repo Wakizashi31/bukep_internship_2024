@@ -19,96 +19,96 @@
         </section>
         <section class="calc-buttons">
             <div class="calc-button">
-                <button class="BdOperation" onclick="bSaveResult()"> 
+                <button class="button-cyan" onclick="SaveResult()"> 
                     M
                 </button>
-                <button class="BdOperation" onclick="viewingResults('bBeforeResult')">
+                <button class="button-cyan" onclick="viewingResults('bBeforeResult')">
                     &lt;S
                 </button>
-                <button class="BdOperation" onclick="viewingResults('bNextResult')">
+                <button class="button-cyan" onclick="viewingResults('bNextResult')">
                     S>
                 </button>
-                <button class="BdOperation" onclick="bDbClearResults()">
+                <button class="button-cyan" onclick="bDbClearResults()">
                     MC
                 </button>
             </div>
 
             <div class="calc-button" style="margin-left:54px;">
-                <button class="CalcOperation"style="margin-left:50px;" onclick="ClearAll()">
+                <button class="button-cyan"style="margin-left:50px;" onclick="ClearAll()">
                     C
                 </button>
-                <button class="CalcDSymbol" style="font-size:1.5rem;" onclick="DeleteSymbol()">
+                <button class="button-cyan" style="font-size:1.5rem;" onclick="DeleteSymbol()">
                     DEL
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="MathOperation" onclick="bElemetAdd('^')">
+                <button class="MathOperation" onclick="AddElement('^')">
                     ^
                 </button>
-                <button class="MathOperation" onclick="bElemetAdd('(')">
+                <button class="MathOperation" onclick="AddElement('(')">
                     (
                 </button>
-                <button class="MathOperation" onclick="bElemetAdd(')')">
+                <button class="MathOperation" onclick="AddElement(')')">
                     )
                 </button>
-                <button class="MathOperation" onclick="bElemetAdd('/')">
+                <button class="MathOperation" onclick="AddElement('/')">
                     /
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="Numbers" onclick="bElemetAdd('7')">
+                <button class="Numbers" onclick="AddElement('7')">
                     7
                 </button>
-                <button class="Numbers" onclick="bElemetAdd('8')">
+                <button class="Numbers" onclick="AddElement('8')">
                     8
                 </button>
-                <button class="Numbers" onclick="bElemetAdd('9')">
+                <button class="Numbers" onclick="AddElement('9')">
                     9
                 </button>
-                <button class="MathOperation" onclick="bElemetAdd('*')">
+                <button class="MathOperation" onclick="AddElement('*')">
                     *
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="Numbers" onclick="bElemetAdd('4')">
+                <button class="Numbers" onclick="AddElement('4')">
                     4
                 </button>
-                <button class="Numbers" onclick="bElemetAdd('5')">
+                <button class="Numbers" onclick="AddElement('5')">
                     5
                 </button>
-                <button class="Numbers" onclick="bElemetAdd('6')">
+                <button class="Numbers" onclick="AddElement('6')">
                     6
                 </button>
-                <button class="MathOperation" onclick="bElemetAdd('-')">
+                <button class="MathOperation" onclick="AddElement('-')">
                     -
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="Numbers" onclick="bElemetAdd('1')">
+                <button class="Numbers" onclick="AddElement('1')">
                     1
                 </button>
-                <button class="Numbers" onclick="bElemetAdd('2')">
+                <button class="Numbers" onclick="AddElement('2')">
                     2
                 </button>
-                <button class="Numbers" onclick="bElemetAdd('3')">
+                <button class="Numbers" onclick="AddElement('3')">
                     3
                 </button>
-                <button class="MathOperation"onclick="bElemetAdd('+')">
+                <button class="MathOperation"onclick="AddElement('+')">
                     +
                 </button>
             </div>
             <div class="calc-button">
-                <button class="BZero" onclick="bElemetAdd('0')">
+                <button class="BZero" onclick="AddElement('0')">
                     0
                 </button>
-                <button class="comma" onclick="bElemetAdd('.')">
+                <button class="comma" onclick="AddElement('.')">
                     .
                 </button>
-                <button class="Result" onclick="bResult('=')">
+                <button class="Result" onclick="CalculateResult('=')">
                     =
                 </button>
             </div>
@@ -116,24 +116,26 @@
     </div>
     <script>
 
-        function bElemetAdd(value) {
-            let display = document.getElementById("Display");
+        let currentPosition = -1;
+        let calculationResults = [];
 
+        function AddElement(value) {
+            let display = document.getElementById("Display");
+            const operators = ['+', '-', '*', '/', '^'];
             if (value === '0' && display.value === '0') {
                 return;
             }
 
             if (value === '.' && display.value.includes('.')) {
-                const lastCommaIndex = display.value.lastIndexOf('.');
-                const lastOperatorIndex = display.value.search(/[+\-*/]/);
+                let lastCommaIndex = display.value.lastIndexOf('.');
+                let lastOperatorIndex = display.value.search(/[+\-*/]/);
                 if (lastCommaIndex > lastOperatorIndex) {
                     return;
                 }
             }
 
-            const operators = ['+', '-', '*', '/', '^'];
             if (operators.includes(value)) {
-                const lastChar = display.value.charAt(display.value.length - 1);
+                let lastChar = display.value.charAt(display.value.length - 1);
                 if (operators.includes(lastChar)) {
                     display.value = display.value.slice(0, -1) + value;
                     return;
@@ -162,7 +164,7 @@
             }
         }
 
-        async function bResult() {
+        async function CalculateResult() {
             let value = document.getElementById('Display').value;
             
             let response = await fetch("/Calculator/CalculateResult",
@@ -178,7 +180,7 @@
             document.getElementById('Display').value = result;
         }
 
-        async function bSaveResult() {
+        async function SaveResult() {
             let value = document.getElementById('Display').value;
 
             let response = await fetch("/Calculator/SaveResult",
@@ -195,8 +197,6 @@
             }
         }
 
-        let currentPosition = -1;
-        let calculationResults = [];
         async function viewingResults(direction) {           
             let response = await fetch("/Calculator/ShowAllResults", {
                 method: "POST",
@@ -211,9 +211,11 @@
             }
 
             calculationResults = await response.json();
+
             if (direction === 'bNextResult' && currentPosition < calculationResults.length - 1) {
                 currentPosition++;
             }
+
             if (direction === 'bBeforeResult' && currentPosition > 0) {
                 currentPosition--;
             }

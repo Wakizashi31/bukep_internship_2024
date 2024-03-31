@@ -1,13 +1,4 @@
 ﻿
-.CalcOperation {
-    width: 100px;
-    height: 100px;
-    border-radius: 35px;
-    background-color: aqua;
-    font-size: 1.8rem;
-    font-weight: 1000;
-}
-
 .Numbers {
     width: 100px;
     height: 100px;
@@ -17,13 +8,13 @@
     font-weight:1000;
 }
 
-.BdOperation {
+.button-cyan {
     width: 100px;
     height: 100px;
     border-radius: 35px;
     background-color: aqua;
     font-size: 1.8rem;
-    font-weight:1000;
+    font-weight: 1000;
 }
 
 .MathOperation {
