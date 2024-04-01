@@ -46,7 +46,7 @@ namespace BUKEP.Student.MvcCalculator.Controllers
         [HttpPost]
         public void SaveResult(string expression)
         {
-            _resultService.Save(Convert.ToDouble(expression));
+            _resultService.Save(Convert.ToDouble(expression.Replace('.', ',')));
         }
 
         [HttpGet]
