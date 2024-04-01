@@ -1,0 +1,240 @@
+﻿
+@{
+    Layout = null;
+}
+
+<DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="~/Content/Site.css"/>
+    <title>      
+    </title>
+</head>
+<body>  
+    <div class="Wrapper">
+        <section class="screen">
+            <input id="Display" readonly value="0" class="input-form" />
+        </section>
+        <section class="calc-buttons">
+            <div class="calc-button">
+                <button class="button button-aqua" onclick="SaveResult()"> 
+                    M
+                </button>
+                <button class="button button-aqua" onclick="ViewingResults('bBeforeResult')">
+                    &lt;S
+                </button>
+                <button class="button button-aqua" onclick="ViewingResults('bNextResult')">
+                    S>
+                </button>
+                <button class="button button-aqua" onclick="DbClearResults()">
+                    MC
+                </button>
+            </div>
+
+            <div class="calc-button" style="margin-left:54px;">
+                <button class="button button-aqua"style="margin-left:50px;" onclick="ClearAll()">
+                    C
+                </button>
+                <button class="button button-aqua" style="font-size:1.5rem;" onclick="DeleteSymbol()">
+                    DEL
+                </button>
+            </div>
+
+            <div class="calc-button">
+                <button class="button button-orange" onclick="AddElement('^')">
+                    ^
+                </button>
+                <button class="button button-orange" onclick="AddElement('(')">
+                    (
+                </button>
+                <button class="button button-orange" onclick="AddElement(')')">
+                    )
+                </button>
+                <button class="button button-orange" onclick="AddElement('/')">
+                    /
+                </button>
+            </div>
+
+            <div class="calc-button">
+                <button class="button" onclick="AddElement('7')">
+                    7
+                </button>
+                <button class="button" onclick="AddElement('8')">
+                    8
+                </button>
+                <button class="button" onclick="AddElement('9')">
+                    9
+                </button>
+                <button class="button button-orange" onclick="AddElement('*')">
+                    *
+                </button>
+            </div>
+
+            <div class="calc-button">
+                <button class="button" onclick="AddElement('4')">
+                    4
+                </button>
+                <button class="button" onclick="AddElement('5')">
+                    5
+                </button>
+                <button class="button" onclick="AddElement('6')">
+                    6
+                </button>
+                <button class="button button-orange" onclick="AddElement('-')">
+                    -
+                </button>
+            </div>
+
+            <div class="calc-button">
+                <button class="button" onclick="AddElement('1')">
+                    1
+                </button>
+                <button class="button" onclick="AddElement('2')">
+                    2
+                </button>
+                <button class="button" onclick="AddElement('3')">
+                    3
+                </button>
+                <button class="button button-orange" onclick="AddElement('+')">
+                    +
+                </button>
+            </div>
+            <div class="calc-button">
+                <button class="button button-gray"style="margin-left:50px;" onclick="AddElement('0')">
+                    0
+                </button>
+                <button class="button button-gray" onclick="AddElement('.')">
+                    .
+                </button>
+                <button class="button button-orange" onclick="CalculateResult('=')">
+                    =
+                </button>
+            </div>
+        </section>
+    </div>
+    <script>
+
+        let currentPosition = -1;
+        let calculationResults = [];
+
+        function AddElement(value) {
+            let display = document.getElementById("Display");
+            const operators = ['+', '-', '*', '/', '^'];
+            if (value === '0' && display.value === '0') {
+                return;
+            }
+
+            if (value === '.' && display.value.includes('.')) {
+                let lastCommaIndex = display.value.lastIndexOf('.');
+                let lastOperatorIndex = display.value.search(/[+\-*/]/);
+                if (lastCommaIndex > lastOperatorIndex) {
+                    return;
+                }
+            }
+
+            if (operators.includes(value)) {
+                let lastChar = display.value.charAt(display.value.length - 1);
+                if (operators.includes(lastChar)) {
+                    display.value = display.value.slice(0, -1) + value;
+                    return;
+                }
+            }
+
+            if (display.value === "0" && value !== "0") {
+                display.value = value;
+            }
+            else {
+            display.value += value;
+            }
+        }
+
+        function ClearAll() {
+            let display = document.getElementById('Display');
+            display.value = '0'
+        }
+
+        function DeleteSymbol() {
+            let display = document.getElementById('Display');
+            display.value = display.value.slice(0, -1);
+
+            if (display.value === '') {
+                display.value = '0';
+            }
+        }
+
+        async function CalculateResult() {
+            let value = document.getElementById('Display').value;
+            
+            let response = await fetch("/Calculator/CalculateResult",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ expression: value })
+                });
+            
+            let result = await response.json();
+            document.getElementById('Display').value = result;
+        }
+
+        async function SaveResult() {
+            let value = document.getElementById('Display').value;
+
+            let response = await fetch("/Calculator/SaveResult",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ expression: value })
+                });
+
+            if (!response.ok) {
+                document.getElementById('Display').value = "Ошибка сохранения!";
+            }
+        }
+
+        async function ViewingResults(direction) {           
+            let response = await fetch("/Calculator/ShowAllResults", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                document.getElementById('Display').value = "Ошибка получения результатов!";
+                return;
+            }
+
+            calculationResults = await response.json();
+
+            if (direction === 'bNextResult' && currentPosition < calculationResults.length - 1) {
+                currentPosition++;
+            }
+
+            if (direction === 'bBeforeResult' && currentPosition > 0) {
+                currentPosition--;
+            }
+
+            document.getElementById('Display').value = calculationResults[currentPosition].Value;
+        }
+
+        async function DbClearResults() {
+
+            let respinse = await fetch("/Calculator/ClearCalcDb", { })
+                
+            currentPosition = -1;
+
+            if (!response.ok) {
+                document.getElementById('Display').value = "Ошибка очистки";
+            }
+
+        }
+
+    </script>
+</body>
+</html>

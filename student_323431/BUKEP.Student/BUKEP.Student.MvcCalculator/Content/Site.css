@@ -1,0 +1,36 @@
+﻿
+.button {
+    width: 100px;
+    height: 100px;
+    background-color: #b5b5b5;
+    border-radius: 35px;
+    font-size: 1.8rem;
+    font-weight: 1000;
+    
+}
+body {
+    background: linear-gradient(90deg, #000000, #808080);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-orange {
+    background-color:orange;
+}
+
+.button-aqua {
+    background-color:aqua;
+}
+ 
+.button-gray {
+    background-color:gray;
+}
+
+.input-form {   
+    width: 410px; 
+    height: 70px; 
+    border-radius: 20px; 
+    background-color:#ffffff; 
+    font-size:1.8rem;
+}
