@@ -49,7 +49,7 @@ namespace BUKEP.Student.MvcCalculator.Controllers
             _resultService.Save(Convert.ToDouble(expression));
         }
 
-        [HttpPost]
+        [HttpGet]
         public void ClearCalcDb()
         {
             _resultService.ClearData();

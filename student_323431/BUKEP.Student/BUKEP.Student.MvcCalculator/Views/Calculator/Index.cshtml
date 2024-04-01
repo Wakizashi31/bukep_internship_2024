@@ -15,100 +15,100 @@
 <body>  
     <div class="Wrapper">
         <section class="screen">
-            <input id="Display" value="0" text-align:right readonly style="width: 410px; height: 70px; border-radius: 20px; background-color:#ffffff; font-size:1.8rem;"/>
+            <input id="Display" readonly value="0" class="input-form" />
         </section>
         <section class="calc-buttons">
             <div class="calc-button">
-                <button class="button-cyan" onclick="SaveResult()"> 
+                <button class="button button-aqua" onclick="SaveResult()"> 
                     M
                 </button>
-                <button class="button-cyan" onclick="viewingResults('bBeforeResult')">
+                <button class="button button-aqua" onclick="ViewingResults('bBeforeResult')">
                     &lt;S
                 </button>
-                <button class="button-cyan" onclick="viewingResults('bNextResult')">
+                <button class="button button-aqua" onclick="ViewingResults('bNextResult')">
                     S>
                 </button>
-                <button class="button-cyan" onclick="bDbClearResults()">
+                <button class="button button-aqua" onclick="DbClearResults()">
                     MC
                 </button>
             </div>
 
             <div class="calc-button" style="margin-left:54px;">
-                <button class="button-cyan"style="margin-left:50px;" onclick="ClearAll()">
+                <button class="button button-aqua"style="margin-left:50px;" onclick="ClearAll()">
                     C
                 </button>
-                <button class="button-cyan" style="font-size:1.5rem;" onclick="DeleteSymbol()">
+                <button class="button button-aqua" style="font-size:1.5rem;" onclick="DeleteSymbol()">
                     DEL
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="MathOperation" onclick="AddElement('^')">
+                <button class="button button-orange" onclick="AddElement('^')">
                     ^
                 </button>
-                <button class="MathOperation" onclick="AddElement('(')">
+                <button class="button button-orange" onclick="AddElement('(')">
                     (
                 </button>
-                <button class="MathOperation" onclick="AddElement(')')">
+                <button class="button button-orange" onclick="AddElement(')')">
                     )
                 </button>
-                <button class="MathOperation" onclick="AddElement('/')">
+                <button class="button button-orange" onclick="AddElement('/')">
                     /
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="Numbers" onclick="AddElement('7')">
+                <button class="button" onclick="AddElement('7')">
                     7
                 </button>
-                <button class="Numbers" onclick="AddElement('8')">
+                <button class="button" onclick="AddElement('8')">
                     8
                 </button>
-                <button class="Numbers" onclick="AddElement('9')">
+                <button class="button" onclick="AddElement('9')">
                     9
                 </button>
-                <button class="MathOperation" onclick="AddElement('*')">
+                <button class="button button-orange" onclick="AddElement('*')">
                     *
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="Numbers" onclick="AddElement('4')">
+                <button class="button" onclick="AddElement('4')">
                     4
                 </button>
-                <button class="Numbers" onclick="AddElement('5')">
+                <button class="button" onclick="AddElement('5')">
                     5
                 </button>
-                <button class="Numbers" onclick="AddElement('6')">
+                <button class="button" onclick="AddElement('6')">
                     6
                 </button>
-                <button class="MathOperation" onclick="AddElement('-')">
+                <button class="button button-orange" onclick="AddElement('-')">
                     -
                 </button>
             </div>
 
             <div class="calc-button">
-                <button class="Numbers" onclick="AddElement('1')">
+                <button class="button" onclick="AddElement('1')">
                     1
                 </button>
-                <button class="Numbers" onclick="AddElement('2')">
+                <button class="button" onclick="AddElement('2')">
                     2
                 </button>
-                <button class="Numbers" onclick="AddElement('3')">
+                <button class="button" onclick="AddElement('3')">
                     3
                 </button>
-                <button class="MathOperation"onclick="AddElement('+')">
+                <button class="button button-orange" onclick="AddElement('+')">
                     +
                 </button>
             </div>
             <div class="calc-button">
-                <button class="BZero" onclick="AddElement('0')">
+                <button class="button button-gray"style="margin-left:50px;" onclick="AddElement('0')">
                     0
                 </button>
-                <button class="comma" onclick="AddElement('.')">
+                <button class="button button-gray" onclick="AddElement('.')">
                     .
                 </button>
-                <button class="Result" onclick="CalculateResult('=')">
+                <button class="button button-orange" onclick="CalculateResult('=')">
                     =
                 </button>
             </div>
@@ -197,7 +197,7 @@
             }
         }
 
-        async function viewingResults(direction) {           
+        async function ViewingResults(direction) {           
             let response = await fetch("/Calculator/ShowAllResults", {
                 method: "POST",
                 headers: {
@@ -223,14 +223,10 @@
             document.getElementById('Display').value = calculationResults[currentPosition].Value;
         }
 
-        async function bDbClearResults() {
-            
-            let respinse = await fetch("/Calculator/ClearCalcDb",
-                {
-                    method: "POST"
-                    
-                });
+        async function DbClearResults() {
 
+            let respinse = await fetch("/Calculator/ClearCalcDb", { })
+                
             currentPosition = -1;
 
             if (!response.ok) {
@@ -238,7 +234,6 @@
             }
 
         }
-
 
     </script>
 </body>
